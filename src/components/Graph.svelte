@@ -34,16 +34,24 @@
         console.log(d3.selectAll('circle'));
     });
 
-    function dragstarted() {
+    function dragstarted(d) {
         console.log('start');
+        d3.select(this)
+          .attr('stroke',"black")
+          .attr('stroke-width',"5");
     }
 
     function dragmove(d) {
-        console.log('moving!');
+        console.log('moving');
+        d3.select(this)
+            .attr("cx", d.x)
+            .attr("cy", d.y);
     }
 
-    function dragend() {
+    function dragend(d) {
         console.log('end');
+        d3.select(this)
+          .attr('stroke',"none");
     }
 
 
