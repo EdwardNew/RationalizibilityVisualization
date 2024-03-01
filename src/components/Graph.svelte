@@ -1,5 +1,7 @@
 <script>
     import * as d3 from 'd3';
+    import { onMount } from 'svelte';
+    import { circIn } from 'svelte/easing';
 
     const width = 928;
     const height = 500;
@@ -23,6 +25,27 @@
     function recordMousePosition(event) {
         mousePosition = d3.pointer(event);
     }
+
+    onMount(() => {
+        d3.selectAll('circle').call(d3.drag()
+          .on('start', dragstarted)
+          .on('drag', dragmove)
+          .on('end', dragend));
+        console.log(d3.selectAll('circle'));
+    });
+
+    function dragstarted() {
+        console.log('start');
+    }
+
+    function dragmove(d) {
+        console.log('moving!');
+    }
+
+    function dragend() {
+        console.log('end');
+    }
+
 
 </script>
 
@@ -51,7 +74,7 @@
             cy={yScale(d.y)}
             fill={d.color}
             r="10"
-            />
+            />  
         {/each}
     </g>
 </svg>
