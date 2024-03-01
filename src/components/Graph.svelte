@@ -60,6 +60,7 @@
         pmap[d3.select(this).attr("id")].y = d.y;
 
        console.log(players);
+<<<<<<< HEAD
        console.log(pmap["player2"].x, pmap["player2"].y);
        console.log(pmap["player1"].x, pmap["player1"].y);
 
@@ -80,6 +81,11 @@
             dominanceText = "No dominance relationship.";
         }
     }
+=======
+    }
+
+
+>>>>>>> 8130a16c640a71a0691ad1771d41564b1e3c20c7
 </script>
 
 <h1>Rationalizibility</h1>
@@ -108,7 +114,7 @@
             cy={d.y}
             fill={d.color}
             r="10"
-            />
+            />  
         {/each}
     </g>
 </svg>
