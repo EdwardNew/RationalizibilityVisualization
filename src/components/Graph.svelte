@@ -19,6 +19,7 @@
     let player1 = {'x':2, 'y':2, 'color': 'red'};
     let player2 = {'x':3, 'y':3, 'color': 'blue'};
     let players = [player1, player2];
+    let pmap = {'player1': player1, 'player2': player2}
     
 
     let mousePosition = [0, 0];
@@ -52,6 +53,11 @@
         console.log('end');
         d3.select(this)
           .attr('stroke',"none");
+
+        pmap[d3.select(this).attr("id")].x = d.x;
+        pmap[d3.select(this).attr("id")].y = d.y;
+
+       console.log(players);
     }
 
 
