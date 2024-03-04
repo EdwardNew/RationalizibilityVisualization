@@ -114,6 +114,7 @@
 
 <h1>Rationalizibility</h1>
 <p>Visualizing strict/weak dominance</p>
+<p>Click on a dot and drag it to a new location on the grid. The visualization will dynamically update based on your movement.</p>
 
 <svg {width} {height} viewBox="0 0 {width} {height}" on:pointermove={recordMousePosition}>
     <!-- axis -->
