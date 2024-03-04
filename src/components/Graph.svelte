@@ -1,16 +1,16 @@
 <script>
     import * as d3 from 'd3';
     import { onMount } from 'svelte';
-    import { circIn } from 'svelte/easing';
+    // import { circIn } from 'svelte/easing';
 
-    const width = 928;
+    const width = 500;
     const height = 500;
-    const marginTop = 10;
-    const marginRight = 10;
-    const marginBottom = 20;
-    const marginLeft = 40;
+    const marginTop = 50;
+    const marginRight = 25;
+    const marginBottom = 0;
+    const marginLeft = 25;
 
-    let dominanceText = "Alternative B strictly dominates R."
+    let dominanceText = "No dominance relationship."
 
     let xScale = d3.scaleLinear([0, 5], [0, width]);
     const xAxis = [...Array(5).keys()];
@@ -46,9 +46,19 @@
 
     function dragmove(d) {
         console.log('moving');
+
+        const [snapX, snapY] = snapToGrid([d.x, d.y]);
+
+        const maxX = width - marginLeft - marginRight;
+        const maxY = height - marginTop - marginBottom;
+
+        const clampedX = Math.max(Math.min(snapX, maxX), marginLeft);
+        const clampedY = Math.max(Math.min(snapY, maxY), marginTop);
+
+
         d3.select(this)
-            .attr("cx", d.x)
-            .attr("cy", d.y);
+            .attr("cx", clampedX)
+            .attr("cy", clampedY);
     }
 
     function dragend(d) {
@@ -56,14 +66,22 @@
         d3.select(this)
           .attr('stroke',"none");
 
-        pmap[d3.select(this).attr("id")].x = d.x;
-        pmap[d3.select(this).attr("id")].y = d.y;
+        const [snapX, snapY] = snapToGrid([d.x, d.y]);
 
-       console.log(players);
-       console.log(pmap["player2"].x, pmap["player2"].y);
-       console.log(pmap["player1"].x, pmap["player1"].y);
+        const maxX = width - marginLeft - marginRight;
+        const maxY = height - marginTop - marginBottom;
 
-       if (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) {
+        const clampedX = Math.max(Math.min(snapX, maxX), marginLeft);
+        const clampedY = Math.max(Math.min(snapY, maxY), marginTop);
+
+        pmap[d3.select(this).attr("id")].x = clampedX;
+        pmap[d3.select(this).attr("id")].y = clampedY;
+
+        console.log(players);
+        console.log(pmap["player2"].x, pmap["player2"].y);
+        console.log(pmap["player1"].x, pmap["player1"].y);
+
+        if (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) {
             console.log("Alternative R strictly dominates B.");
             dominanceText = "Alternative R strictly dominates B.";
         } else if (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) {
@@ -80,13 +98,24 @@
             dominanceText = "No dominance relationship.";
         }
     }
+
+    function snapToGrid([x, y]) {
+        // Define grid interval
+        const gridSize = 50;
+
+        // Snap to the nearest grid point
+        const snapX = Math.round(x / gridSize) * gridSize;
+        const snapY = Math.round(y / gridSize) * gridSize;
+
+        return [snapX, snapY];
+    }
+
 </script>
 
 <h1>Rationalizibility</h1>
 <p>Visualizing strict/weak dominance</p>
 
 <svg {width} {height} viewBox="0 0 {width} {height}" on:pointermove={recordMousePosition}>
-    
     <!-- axis -->
     <g stroke="lightgray" stroke-width="0.5">
         {#each xAxis as x}
