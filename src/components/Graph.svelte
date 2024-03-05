@@ -110,64 +110,84 @@
         return [snapX, snapY];
     }
 
+    export let index;
+    let isVisible= false;
+
+    $: if (index === 1) {
+        isVisible = true;
+    } else {
+        isVisible = false;
+    }
+
 </script>
+<div id='graph' class:show={isVisible}>
 
-<h1>Rationalizibility</h1>
-<p>Visualizing strict/weak dominance</p>
-<p>Click on a dot and drag it to a new location on the grid. The visualization will dynamically update based on your movement.</p>
+    <h1>Rationalizibility</h1>
+    <p>Visualizing strict/weak dominance</p>
+    <p>Click on a dot and drag it to a new location on the grid. The visualization will dynamically update based on your movement.</p>
 
-<svg {width} {height} viewBox="0 0 {width-30} {height+30}" on:pointermove={recordMousePosition}>
-    <!-- axis -->
-    <g stroke="lightgray" stroke-width="0.5">
-        {#each xAxis as x}
-            <line x="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1'></line>
-        {/each}
+    <svg {width} {height} viewBox="0 0 {width-30} {height+30}" on:pointermove={recordMousePosition}>
+        <!-- axis -->
+        <g stroke="lightgray" stroke-width="0.5">
+            {#each xAxis as x}
+                <line x="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1'></line>
+            {/each}
 
-        {#each yAxis as y}
-            <line x="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='black' stroke-width='1'></line>
-        {/each}
-    </g>
+            {#each yAxis as y}
+                <line x="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='black' stroke-width='1'></line>
+            {/each}
+        </g>
 
-    <!-- points -->
-    <g stroke="#000" stroke-opacity="0.2">
-        {#each players as d, i}
-            <circle
-            key={i}
-            id='player{i+1}'
-            cx={d.x}
-            cy={d.y}
-            fill={d.color}
-            r="10"
-            />  
-        {/each}
-    </g>
+        <!-- points -->
+        <g stroke="#000" stroke-opacity="0.2">
+            {#each players as d, i}
+                <circle
+                key={i}
+                id='player{i+1}'
+                cx={d.x}
+                cy={d.y}
+                fill={d.color}
+                r="10"
+                />  
+            {/each}
+        </g>
 
-    <text
-        class="xlabel"
-        text-anchor="middle"
-        x={width-250}
-        y={height+15}
-    >
-        Payoff if opposing player plays move A
-    </text>
+        <text
+            class="xlabel"
+            text-anchor="middle"
+            x={width-250}
+            y={height+15}
+        >
+            Payoff if opposing player plays move A
+        </text>
 
-    <text
-        class="ylabel"
-        text-anchor="middle"
-        transform="rotate(-90)"
-        x={-250}
-        y={-15}
-    >
-        Payoff if opposing player plays move B
-    </text>
-</svg>
+        <text
+            class="ylabel"
+            text-anchor="middle"
+            transform="rotate(-90)"
+            x={-250}
+            y={-15}
+        >
+            Payoff if opposing player plays move B
+        </text>
+    </svg>
 
-<div>
-    <p>{dominanceText}</p>
+    <div>
+        <p>{dominanceText}</p>
+    </div>
+
 </div>
 
-
 <style>
+#graph {
+    position:fixed;
+    display: none;
+}
+
+#graph.show {
+    display: block;
+}
+
 svg {
     max-width: 100%;
     height: auto;

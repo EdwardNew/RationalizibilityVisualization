@@ -3,8 +3,13 @@
     import Scroller from '@sveltejs/svelte-scroller';
     import { draw } from "svelte/transition";
     import { cubicInOut } from 'svelte/easing';
+
+    import Graph from '../components/Graph.svelte';
+    import Text from '../components/Text.svelte';
   
     let count, index, offset, progress;
+
+
 
 </script>
 
@@ -29,10 +34,13 @@
   </div>
 
   <div class="foreground" slot="foreground">
+    <Graph {index} />
+    <Text {index} />
     <section>This is the first section. </section>
     <section>This is the second section.</section>
     <section>This is the third section.</section>
   </div>
+
 </Scroller>
 
 
@@ -59,7 +67,7 @@
     }
   
     section {
-      height: 80vh;
+      height: 100vh;
       background-color: rgba(0, 0, 0, 0.2); /* 20% opaque */
       /* color: white; */
       /* outline: magenta solid 3px; */
