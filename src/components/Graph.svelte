@@ -5,10 +5,10 @@
 
     const width = 500;
     const height = 500;
-    const marginTop = 50;
-    const marginRight = 25;
+    const marginTop = 0;
+    const marginRight = 0;
     const marginBottom = 0;
-    const marginLeft = 25;
+    const marginLeft = 0;
 
     let dominanceText = "No dominance relationship."
 
@@ -116,7 +116,7 @@
 <p>Visualizing strict/weak dominance</p>
 <p>Click on a dot and drag it to a new location on the grid. The visualization will dynamically update based on your movement.</p>
 
-<svg {width} {height} viewBox="0 0 {width} {height}" on:pointermove={recordMousePosition}>
+<svg {width} {height} viewBox="0 0 {width-30} {height+30}" on:pointermove={recordMousePosition}>
     <!-- axis -->
     <g stroke="lightgray" stroke-width="0.5">
         {#each xAxis as x}
@@ -141,6 +141,25 @@
             />  
         {/each}
     </g>
+
+    <text
+        class="xlabel"
+        text-anchor="middle"
+        x={width-250}
+        y={height+15}
+    >
+        Payoff if opposing player plays move A
+    </text>
+
+    <text
+        class="ylabel"
+        text-anchor="middle"
+        transform="rotate(-90)"
+        x={-250}
+        y={-15}
+    >
+        Payoff if opposing player plays move B
+    </text>
 </svg>
 
 <div>
