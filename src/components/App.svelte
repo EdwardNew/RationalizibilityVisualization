@@ -4,7 +4,7 @@
 </script>
 
 <main>
-  <Graph />
+  <Scrolleyteller />
 </main>
 
 <style>
