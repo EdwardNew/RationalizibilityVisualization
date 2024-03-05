@@ -5,9 +5,9 @@
 
     const width = 500;
     const height = 500;
-    const marginTop = 0;
-    const marginRight = 0;
-    const marginBottom = 0;
+    const marginTop = 50;
+    const marginRight = 50;
+    const marginBottom = -50;
     const marginLeft = 0;
 
     let dominanceText = "No dominance relationship."
@@ -17,6 +17,15 @@
     
     let yScale = d3.scaleLinear([0, 5], [0, height]);
     const yAxis = [...Array(5).keys()];
+
+    var gx = d3.scaleLinear()
+        .domain([0, 5])
+        .range([0, 500]);
+
+    var gy = d3.scaleLinear()
+        .domain([0, 5])
+        .range([500, 0]);
+
 
     let player1 = {'x':xScale(2), 'y':yScale(2), 'color': 'red'};
     let player2 = {'x':xScale(3), 'y':yScale(3), 'color': 'blue'};
@@ -35,6 +44,16 @@
           .on('drag', dragmove)
           .on('end', dragend));
         console.log(d3.selectAll('circle'));
+
+        d3.select("#chart1")
+            .append("g")
+            .attr("transform", "translate(0, 500)")
+            .call(d3.axisBottom(gx));
+
+        d3.select("#chart1")
+            .append("g")
+            .attr("transform", "translate(0, 0)") 
+            .call(d3.axisLeft(gy));
     });
 
     function dragstarted(d) {
@@ -126,12 +145,12 @@
     <p>Visualizing strict/weak dominance</p>
     <p>Click on a dot and drag it to a new location on the grid. The visualization will dynamically update based on your movement.</p>
 
-    <svg {width} {height} viewBox="0 0 {width-30} {height+30}" on:pointermove={recordMousePosition}>
-        <!-- axis -->
-        <g stroke="lightgray" stroke-width="0.5">
-            {#each xAxis as x}
-                <line x="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1'></line>
-            {/each}
+<svg {width} {height} viewBox="0 0 {width-65} {height+30}" on:pointermove={recordMousePosition} id="chart1">
+    <!-- axis -->
+    <g stroke="lightgray" stroke-width="0.5">
+        {#each xAxis as x}
+            <line x="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1'></line>
+        {/each}
 
             {#each yAxis as y}
                 <line x="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='black' stroke-width='1'></line>
@@ -152,25 +171,25 @@
             {/each}
         </g>
 
-        <text
-            class="xlabel"
-            text-anchor="middle"
-            x={width-250}
-            y={height+15}
-        >
-            Payoff if opposing player plays move A
-        </text>
+    <text
+        class="xlabel"
+        text-anchor="middle"
+        x={width-250}
+        y={height+40}
+    >
+        Payoff if opposing player plays move A
+    </text>
 
-        <text
-            class="ylabel"
-            text-anchor="middle"
-            transform="rotate(-90)"
-            x={-250}
-            y={-15}
-        >
-            Payoff if opposing player plays move B
-        </text>
-    </svg>
+    <text
+        class="ylabel"
+        text-anchor="middle"
+        transform="rotate(-90)"
+        x={-250}
+        y={-40}
+    >
+        Payoff if opposing player plays move B
+    </text>
+</svg>
 
     <div>
         <p>{dominanceText}</p>
