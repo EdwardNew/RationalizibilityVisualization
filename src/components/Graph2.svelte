@@ -1,7 +1,9 @@
 <script>
     import * as d3 from 'd3';
     import { onMount } from 'svelte';
-    // import { circIn } from 'svelte/easing';
+    import { fly, fade, draw } from "svelte/transition";
+    import { tweened } from "svelte/motion";
+    import { cubicOut, cubicInOut, cubicIn } from "svelte/easing";
 
     const width = 500;
     const height = 500;
@@ -38,19 +40,17 @@
         mousePosition = d3.pointer(event);
     }
 
-    onMount(() => {
-        d3.selectAll('circle').call(d3.drag()
-          .on('start', dragstarted)
-          .on('drag', dragmove)
-          .on('end', dragend));
-        console.log(d3.selectAll('circle'));
+    let mounted = false;
 
-        d3.select("#chart1")
+    onMount(() => {
+        mounted = true;
+
+        d3.select("#chart2")
             .append("g")
             .attr("transform", "translate(0, 500)")
             .call(d3.axisBottom(gx));
 
-        d3.select("#chart1")
+        d3.select("#chart2")
             .append("g")
             .attr("transform", "translate(0, 0)") 
             .call(d3.axisLeft(gy));
@@ -132,44 +132,105 @@
     export let index;
     let isVisible= false;
 
-    $: if (index === 1) {
+    $: if (index === 3) {
         isVisible = true;
     } else {
         isVisible = false;
     }
 
+
+
+    // New Curve Plotting Code
+
+    function equation1(x) {
+        return x**2
+    }
+
+    function equation2(x) {
+        return x**0.5
+    }
+
+    const br1 = d3.line()
+    .x((d) => xScale(d))
+    .y((d) => height - yScale(equation1(d)));
+
+    const br2 = d3.line()
+    .x((d) => xScale(d))
+    .y((d) => height - yScale(equation2(d)));
+   
+    const data = d3.range(0, 5, 0.1);
+
+
+    let iteration = 0;
+
+    let range = [0,2];
+
+    function iterate() {
+        iteration++;
+        console.log('interate', iteration);
+        
+    }
+
+    function back() {
+        if (iteration > 0) {
+            iteration--;
+        }
+
+        console.log('back', currIteration)
+    }
+
+    function calcBounds(iteration, range) {
+        let newRange = [0,0];
+        for(let i=0; i<iteration; i++){
+            newRange = [calcBound(range[0]), calcBound(range[1])]
+        }
+        return newRange;
+    }
+
+    function calcBound(bound) {
+        return equation1(bound);
+    }
+
+
 </script>
 <div id='graph' class:show={isVisible}>
 
-    <h1>Rationalizibility</h1>
-    <p>Visualizing strict/weak dominance</p>
-    <p>Click on a dot and drag it to a new location on the grid. The visualization will dynamically update based on your movement.</p>
-
-<svg {width} {height} viewBox="0 -5 {width-65} {height+65}" on:pointermove={recordMousePosition} id="chart1">
+<svg {width} {height} viewBox="0 -5 {width-65} {height+65}" on:pointermove={recordMousePosition} id="chart2">
     <!-- axis -->
-    <g stroke="lightgray" stroke-width="0.5">
+    <g stroke="lightgray" stroke-width="0.5" transition:fade={{ delay: 250, duration: 5000 }}>
         {#each xAxis as x}
-            <line x="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1'></line>
+            {#if isVisible}
+                <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1' in:draw={{ duration: 1000 }}></line>
+            {/if}
         {/each}
 
-            {#each yAxis as y}
-                <line x="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='black' stroke-width='1'></line>
-            {/each}
-        </g>
+        {#each yAxis as y}
+            {#if isVisible}
+                <line x1="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='black' stroke-width='1' in:draw={{ duration: 1000 }}></line>
+            {/if}
+        {/each}
+    </g>
 
-        <!-- points -->
-        <g stroke="#000" stroke-opacity="0.2">
-            {#each players as d, i}
-                <circle
-                key={i}
-                id='player{i+1}'
-                cx={d.x}
-                cy={d.y}
-                fill={d.color}
-                r="10"
-                />  
-            {/each}
-        </g>
+    {#if isVisible}
+        <path d={br1(data)} stroke='red' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
+        <path d={br2(data)} stroke='blue' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
+    {/if}
+
+  
+        {#if iteration === 1}
+            <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(range[0])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+            <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(range[1])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+
+            <line x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(range[0])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+            <line x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(range[1])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+        {:else if iteration === 2}
+            <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(range[0])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+            <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(range[1])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+
+            <line x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {yScale(range[0])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+            <line x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {yScale(range[1])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+        {/if}
+   
 
     <text
         class="xlabel"
@@ -177,7 +238,7 @@
         x={width-250}
         y={height+40}
     >
-        Payoff if opposing player plays move A
+        Your Chosen Price of Ice Cream
     </text>
 
     <text
@@ -187,13 +248,12 @@
         x={-250}
         y={-40}
     >
-        Payoff if opposing player plays move B
+        Rival's Chosen Price of Ice Cream
     </text>
 </svg>
 
-    <div>
-        <p>{dominanceText}</p>
-    </div>
+<button on:click={back}>&lt;</button>
+<button on:click={iterate}>&gt;</button>
 
 </div>
 

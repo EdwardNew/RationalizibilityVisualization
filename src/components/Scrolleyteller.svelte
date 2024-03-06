@@ -5,7 +5,9 @@
     import { cubicInOut } from 'svelte/easing';
 
     import Graph from '../components/Graph.svelte';
+    import Graph2 from '../components/Graph2.svelte';
     import Text from '../components/Text.svelte';
+    
   
     let count, index, offset, progress;
 
@@ -36,9 +38,11 @@
   <div class="foreground" slot="foreground">
     <Graph {index} />
     <Text {index} />
+    <Graph2 {index} />
     <section>This is the first section. </section>
     <section>This is the second section.</section>
     <section>This is the third section.</section>
+    <section>This is the fourth section.</section>
   </div>
 
 </Scroller>
