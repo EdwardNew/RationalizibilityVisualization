@@ -80,6 +80,7 @@
     <h3>Consider the situation:</h3>
     {#if iteration === 0}
         <p>Imagine that you are the owner of an ice cream shop...</p>
+        
         <svg 
             class="icecream"
             id='player1'
@@ -108,8 +109,6 @@
         <svg 
             class="icecream"
             id='player1'
-            x={player1.x}
-            y={player1.y}
             stroke="#000" stroke-opacity="0.2"
             xmlns="http://www.w3.org/2000/svg" data-name="Layer 2" viewBox="0 0 1271.22 949.58"
         >

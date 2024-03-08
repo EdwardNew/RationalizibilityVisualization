@@ -212,7 +212,7 @@
                     <div class="p2"><p>{pmap["player1"].x / 100}</p></div>
                 </td>
                 <td>
-                    <div class="p1"><p>{pmap["player1"].y / 100}</p></div>
+                    <div class="p1"><p>{height / 100 - pmap["player1"].y / 100}</p></div>
                     <div class="p2"><p>{pmap["player2"].x / 100}</p></div>
                 </td>
                 </tr>
@@ -220,11 +220,11 @@
                 <td><div class="p1"><p>B</p></div></td>
                 <td>   
                     <div class="p1"><p>{pmap["player2"].x / 100}</p></div>
-                    <div class="p2"><p>{pmap["player1"].y / 100}</p></div>
+                    <div class="p2"><p>{height / 100 - pmap["player1"].y / 100}</p></div>
                 </td>
                 <td>
-                    <div class="p1"><p>{pmap["player2"].y / 100}</p></div>
-                    <div class="p2"><p>{pmap["player2"].y / 100}</p></div>
+                    <div class="p1"><p>{height / 100 - pmap["player2"].y / 100}</p></div>
+                    <div class="p2"><p>{height / 100 - pmap["player2"].y / 100}</p></div>
                 </td>
                 </tr>
             </table>
