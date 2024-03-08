@@ -1,6 +1,7 @@
 <script>
-  import Graph from '../components/Graph.svelte';
+  import Title from '../components/Title.svelte';
   import Scrolleyteller from './Scrolleyteller.svelte';
+
 </script>
 
 <svelte:head>
@@ -15,7 +16,7 @@
 
 <style>
   :global(body) {
-    background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+    background-image: linear-gradient(-225deg, #CBBACC 0%, #2580B3 100%);
   }
 
   :global(body) {

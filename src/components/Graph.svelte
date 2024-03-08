@@ -25,8 +25,8 @@
         .domain([0, 5])
         .range([500, 0]);
 
-    let player1 = {'x':xScale(2), 'y':yScale(2), 'event': 'A'};
-    let player2 = {'x':xScale(3), 'y':yScale(3), 'event': 'B'};
+    let player1 = {'x':xScale(2), 'y':yScale(2), 'event': 'H'};
+    let player2 = {'x':xScale(3), 'y':yScale(3), 'event': 'L'};
     let players = [player1, player2];
     let pmap = {'player1': player1, 'player2': player2}
 
@@ -98,17 +98,17 @@
         console.log(pmap["player1"].x, pmap["player1"].y);
 
         if (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) {
-            console.log("Alternative A strictly dominates B.");
-            dominanceText = "Alternative A strictly dominates B.";
+            console.log("Alternative H strictly dominates L.");
+            dominanceText = "Alternative H strictly dominates L.";
         } else if (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) {
-            console.log("Alternative B strictly dominates A.");
-            dominanceText = "Alternative B strictly dominates A.";
+            console.log("Alternative L strictly dominates H.");
+            dominanceText = "Alternative L strictly dominates H.";
         } else if ((pmap["player1"].x == pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) || (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y == pmap["player2"].y)) {
-            console.log("Alternative B weakly dominates A.");
-            dominanceText = "Alternative B weakly dominates A.";
+            console.log("Alternative L weakly dominates H.");
+            dominanceText = "Alternative L weakly dominates H.";
         } else if ((pmap["player1"].x == pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) || (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y == pmap["player2"].y)) {
-            console.log("Alternative A weakly dominates B.");
-            dominanceText = "Alternative A weakly dominates B.";
+            console.log("Alternative H weakly dominates L.");
+            dominanceText = "Alternative H weakly dominates L.";
         } else {
             console.log("No dominance relationship.");
             dominanceText = "No dominance relationship.";
@@ -143,7 +143,7 @@
     <div id="graphContainer">
         <svg {width} {height} viewBox="40 -40 {width-100} {height+100}" on:pointermove={recordMousePosition} id="chart1">
             <!-- axis -->
-            <g stroke="#ffebeb" stroke-width="0.5" opacity=0>
+            <g stroke="#ffebeb" stroke-width="0.5" opacity=0.2>
                 {#each xAxis as x}
                     <line x="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1'></line>
                 {/each}
@@ -181,7 +181,7 @@
                 x={width-250}
                 y={height+40}
             >
-                Payoff if opposing player plays move A
+                Payoff ($) if opposing player chooses a high price (H)
             </text>
 
             <text
@@ -191,7 +191,7 @@
                 x={-250}
                 y={-40}
             >
-                Payoff if opposing player plays move B
+                Payoff ($) if opposing player chooses a low pirce (L)
             </text>
         </svg>
         

@@ -1,30 +1,29 @@
 <script>
     // import * as d3 from 'd3';
     import Scroller from '@sveltejs/svelte-scroller';
-
-    import Graph from '../components/Graph.svelte';
-    import Graph2 from '../components/Graph2.svelte';
-    import Intro from '../components/Intro.svelte';
-    import Text from '../components/Text.svelte';
+    
+    import Title from './Title.svelte';
+    import Graph from './Graph.svelte';
+    import Graph2 from './Graph2.svelte';
+    import Intro from './Intro.svelte';
+    import Text from './Text.svelte';
     
   
     let count, index, offset, progress;
 
 </script>
 
-
-<!-- <Intro /> -->
-
 <Scroller
   top={0.0}
   bottom={1}
-  threshold={0.3}
+  threshold={0.5}
   bind:count
   bind:index
   bind:offset
   bind:progress
 >
   <div class="background" slot="background">
+    <Title {index} />
     <div class="progress-bars">
         <p>current section: <strong>{index + 1}/{count}</strong></p>
         <progress value={count ? (index + 1) / count : 0} />
@@ -70,9 +69,9 @@
     }
   
     section {
-      height: 200vh;
+      height: 100vh;
       background-color: rgba(0, 0, 0, 0.2);
-      /* background-color: transparent; */
+      background-color: transparent;
       text-align: center;
       max-width: 1000px; /* adjust at will */
       color: black;
