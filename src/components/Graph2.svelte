@@ -11,22 +11,23 @@
     const marginRight = 50;
     const marginBottom = -50;
     const marginLeft = 0;
+    const axisBound = 6;
 
     let dominanceText = "No dominance relationship."
 
-    let xScale = d3.scaleLinear([0, 5], [0, width]);
-    const xAxis = [...Array(5).keys()];
+    let xScale = d3.scaleLinear([0, axisBound], [0, width]);
+    const xAxis = [...Array(axisBound).keys()];
     
-    let yScale = d3.scaleLinear([0, 5], [0, height]);
-    const yAxis = [...Array(5).keys()];
+    let yScale = d3.scaleLinear([0, axisBound], [0, height]);
+    const yAxis = [...Array(axisBound).keys()];
 
     var gx = d3.scaleLinear()
-        .domain([0, 5])
-        .range([0, 500]);
+        .domain([0, axisBound])
+        .range([0, width]);
 
     var gy = d3.scaleLinear()
-        .domain([0, 5])
-        .range([500, 0]);
+        .domain([0, axisBound])
+        .range([height, 0]);
 
 
     let player1 = {'x':xScale(2), 'y':yScale(2), 'color': 'red'};
@@ -143,11 +144,11 @@
     // New Curve Plotting Code
 
     function equation1(x) {
-        return x**2
+        return 8/(x+2)
     }
 
     function equation2(x) {
-        return x**0.5
+        return (8/x) - 2;
     }
 
     const br1 = d3.line()
@@ -157,18 +158,21 @@
     const br2 = d3.line()
     .x((d) => xScale(d))
     .y((d) => height - yScale(equation2(d)));
-   
-    const data = d3.range(0, 5, 0.1);
+
+    const data = d3.range(0, axisBound, 0.1);
+    const inverseData = d3.range(axisBound, 0, -0.1);
 
 
     let iteration = 0;
+    let currentBounds = [0,6];
 
-    let range = [0,2];
 
     function iterate() {
         iteration++;
         console.log('interate', iteration);
-        
+        currentBounds = calcBounds(currentBounds);
+        console.log(iteration, currentBounds);
+        document.querySelector('#RSet').innerHTML += `<p>[${currentBounds[0].toFixed(4)}, ${currentBounds[1].toFixed(4)}] x [${currentBounds[0].toFixed(4)}, ${currentBounds[1].toFixed(4)}]</p>`
     }
 
     function back() {
@@ -176,18 +180,22 @@
             iteration--;
         }
 
-        console.log('back', currIteration)
+        console.log('back', iteration)
     }
 
-    function calcBounds(iteration, range) {
-        let newRange = [0,0];
-        for(let i=0; i<iteration; i++){
-            newRange = [calcBound(range[0]), calcBound(range[1])]
-        }
-        return newRange;
+    function calcBounds(currentBounds) {
+        return [calcBound(currentBounds[1]), calcBound(currentBounds[0])];
     }
 
     function calcBound(bound) {
+        return equation1(bound);
+    }
+
+    function undoBounds(currentBounds) {
+        return [calcBound(currentBounds[1]), calcBound(currentBounds[0])];
+    }
+
+    function undoBound(bound) {
         return equation1(bound);
     }
 
@@ -213,22 +221,16 @@
 
     {#if isVisible}
         <path d={br1(data)} stroke='red' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
-        <path d={br2(data)} stroke='blue' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
+        <path d={br2(inverseData)} stroke='blue' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
     {/if}
 
   
-        {#if iteration === 1}
-            <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(range[0])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
-            <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(range[1])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+        {#if iteration}
+            <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[0])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+            <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[1])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
 
-            <line x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(range[0])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
-            <line x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(range[1])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
-        {:else if iteration === 2}
-            <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(range[0])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
-            <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(range[1])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
-
-            <line x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {yScale(range[0])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
-            <line x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {yScale(range[1])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+            <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[0])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+            <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[1])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
         {/if}
    
 
@@ -255,12 +257,23 @@
 <button on:click={back}>&lt;</button>
 <button on:click={iterate}>&gt;</button>
 
+<div id="RSet">
+    <p>Rationalizable Set</p>
+    <p>[&infin;,&infin;] x [&infin;,&infin;]</p>
+</div>
+
+
+
 </div>
 
 <style>
 #graph {
     position:fixed;
     display: none;
+}
+
+.line {
+    transition: all 1s;
 }
 
 #graph.show {
