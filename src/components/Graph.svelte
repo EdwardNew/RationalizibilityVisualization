@@ -140,101 +140,105 @@
     <h3>Visualizing strict/weak dominance</h3>
     <p>Click on a dot and drag it to a new location on the grid. The visualization will dynamically update based on your movement.</p>
 
-<svg {width} {height} viewBox="40 -40 {width-100} {height+100}" on:pointermove={recordMousePosition} id="chart1">
-    <!-- axis -->
-    <g stroke="#ffebeb" stroke-width="0.5" opacity=0>
-        {#each xAxis as x}
-            <line x="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1'></line>
-        {/each}
+    <div id="graphContainer">
+        <svg {width} {height} viewBox="40 -40 {width-100} {height+100}" on:pointermove={recordMousePosition} id="chart1">
+            <!-- axis -->
+            <g stroke="#ffebeb" stroke-width="0.5" opacity=0>
+                {#each xAxis as x}
+                    <line x="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1'></line>
+                {/each}
 
-            {#each yAxis as y}
-                <line x="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='black' stroke-width='1'></line>
-            {/each}
-        </g>
-
-        <!-- points -->
-        {#each players as d, i}
-            <g class="points"
-                stroke="#ffe9e3" stroke-opacity="0"
-                key={i}
-                id='player{i+1}'
-                transform="translate({d.x}, {d.y})"
-            >
-                <circle
-                    fill=#f06ca9
-                    r="12"
-                />
-                <text 
-                    fill=#f06ca9
-                    font-size=30
-                    transform="translate(15, -15)"
-                >
-                    {d.event}
-                </text>
+                {#each yAxis as y}
+                    <line x="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='black' stroke-width='1'></line>
+                {/each}
             </g>
-        {/each}
 
-        <text
-            class="xlabel"
-            text-anchor="middle"
-            x={width-250}
-            y={height+40}
-        >
-            Payoff if opposing player plays move A
-        </text>
+            <!-- points -->
+            {#each players as d, i}
+                <g class="points"
+                    stroke="#ffe9e3" stroke-opacity="0"
+                    key={i}
+                    id='player{i+1}'
+                    transform="translate({d.x}, {d.y})"
+                >
+                    <circle
+                        fill=#f06ca9
+                        r="12"
+                    />
+                    <text 
+                        fill=#f06ca9
+                        font-size=30
+                        transform="translate(15, -15)"
+                    >
+                        {d.event}
+                    </text>
+                </g>
+            {/each}
 
-        <text
-            class="ylabel"
-            text-anchor="middle"
-            transform="rotate(-90)"
-            x={-250}
-            y={-40}
-        >
-            Payoff if opposing player plays move B
-        </text>
-    </svg>
-    
+            <text
+                class="xlabel"
+                text-anchor="middle"
+                x={width-250}
+                y={height+40}
+            >
+                Payoff if opposing player plays move A
+            </text>
 
-    <div class="tableChart1">
-        <div class="p1-label"><p>Player 1</p></div>
-        <div class = "tableP1">
-            <div class="p2-label"><p>Player 2</p></div>
-            <table border="1">
-                <tr>
-                <td></td>
-                <td><div class="p2"><p>A</p></div></td>
-                <td><div class="p2"><p>B</p></div></td>
-                </tr>
-                <tr>
-                <td><div class="p1"><p>A</p></div></td>
-                <td>
-                    <div class="p1"><p>{pmap["player1"].x / 100}</p></div>
-                    <div class="p2"><p>{pmap["player1"].x / 100}</p></div>
-                </td>
-                <td>
-                    <div class="p1"><p>{height / 100 - pmap["player1"].y / 100}</p></div>
-                    <div class="p2"><p>{pmap["player2"].x / 100}</p></div>
-                </td>
-                </tr>
-                <tr>
-                <td><div class="p1"><p>B</p></div></td>
-                <td>   
-                    <div class="p1"><p>{pmap["player2"].x / 100}</p></div>
-                    <div class="p2"><p>{height / 100 - pmap["player1"].y / 100}</p></div>
-                </td>
-                <td>
-                    <div class="p1"><p>{height / 100 - pmap["player2"].y / 100}</p></div>
-                    <div class="p2"><p>{height / 100 - pmap["player2"].y / 100}</p></div>
-                </td>
-                </tr>
-            </table>
+            <text
+                class="ylabel"
+                text-anchor="middle"
+                transform="rotate(-90)"
+                x={-250}
+                y={-40}
+            >
+                Payoff if opposing player plays move B
+            </text>
+        </svg>
+        
+
+        <div style="display:flex; flex-direction:column; align-items:center">
+            <div class="tableChart1">
+                <div class="p1-label"><p>Player 1</p></div>
+                <div class = "tableP1">
+                    <div class="p2-label"><p>Player 2</p></div>
+                    <table border="1">
+                        <tr>
+                        <td></td>
+                        <td><div class="p2"><p>H</p></div></td>
+                        <td><div class="p2"><p>L</p></div></td>
+                        </tr>
+                        <tr>
+                        <td><div class="p1"><p>H</p></div></td>
+                        <td>
+                            <div class="p1"><p>${pmap["player1"].x / 100}</p></div>
+                            <div class="p2"><p>${pmap["player1"].x / 100}</p></div>
+                        </td>
+                        <td>
+                            <div class="p1"><p>${pmap["player1"].y / 100}</p></div>
+                            <div class="p2"><p>${pmap["player2"].x / 100}</p></div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td><div class="p1"><p>L</p></div></td>
+                        <td>   
+                            <div class="p1"><p>${pmap["player2"].x / 100}</p></div>
+                            <div class="p2"><p>${pmap["player1"].y / 100}</p></div>
+                        </td>
+                        <td>
+                            <div class="p1"><p>${pmap["player2"].y / 100}</p></div>
+                            <div class="p2"><p>${pmap["player2"].y / 100}</p></div>
+                        </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div>
+                <p>{dominanceText}</p>
+            </div>
         </div>
+
     </div>
-
-    <div>
-        <p>{dominanceText}</p>
-    </div>  
-
 </div>
 
 <style>
@@ -266,9 +270,15 @@
         /* height: auto; */
     }
 
-    /* .cls-1, .cls-2, .cls-3, .cls-4 {
-        scale: 0.3;
-    } */
+    circle:hover {
+       filter: brightness(0.8);
+       cursor: grab;
+    }
+
+    circle:active {
+       cursor: grabbing;
+    }
+
     
 
     td {
@@ -285,7 +295,6 @@
         color: #27c297;
         display: inline-block;
         padding-left: 10%;
-
     }
 
     .p2-label {
@@ -302,6 +311,10 @@
 
     .tableChart1 {
         display:flex;
+    }
+    
+    #graphContainer {
+        display: flex;
     }
 
 </style>

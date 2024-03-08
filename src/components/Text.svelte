@@ -160,10 +160,6 @@
 </div>
 
 <style>
-    /* svg {
-        position: relative;
-        left: 20px;
-    } */
     div {
         position: fixed;
         display: none;
