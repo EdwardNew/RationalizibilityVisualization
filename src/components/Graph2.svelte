@@ -46,7 +46,7 @@
     export let index;
     let isVisible= false;
 
-    $: if (index === 4) {
+    $: if (index === 6) {
         isVisible = true;
     } else {
         isVisible = false;
@@ -72,7 +72,7 @@
     .y((d) => height - yScale(equation2(d)));
 
     const data = d3.range(0, axisBound, 0.1);
-    const inverseData = d3.range(axisBound, 0, -0.1);
+    const inverseData = d3.range(4, 0.9, -0.1);
 
 
     let iteration = 0;
@@ -113,87 +113,103 @@
 
 
 </script>
-<div id='graph' class:show={isVisible}>
+<div id='graph2' class:show={isVisible}>
+    <div id='container'>
+        <div style="display: flex; flex-direction:column">
+            <svg {width} {height} viewBox="40 -40 {width-120} {height+120}" id="chart2">
+                <!-- axis -->
+                <g stroke="#ffebeb" stroke-width="0.5" transition:fade={{ delay: 250, duration: 5000 }}>
+                    {#each xAxis as x}
+                        {#if isVisible}
+                            <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='#d3d3d3' stroke-width='1' in:draw={{ duration: 1000 }}></line>
+                        {/if}
+                    {/each}
 
-<svg {width} {height} viewBox="0 -5 {width-65} {height+65}" id="chart2">
-    <!-- axis -->
-    <g stroke="lightgray" stroke-width="0.5" transition:fade={{ delay: 250, duration: 5000 }}>
-        {#each xAxis as x}
-            {#if isVisible}
-                <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1' in:draw={{ duration: 1000 }}></line>
-            {/if}
-        {/each}
+                    {#each yAxis as y}
+                        {#if isVisible}
+                            <line x1="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='#d3d3d3' stroke-width='1' in:draw={{ duration: 1000 }}></line>
+                        {/if}
+                    {/each}
+                </g>
 
-        {#each yAxis as y}
-            {#if isVisible}
-                <line x1="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='black' stroke-width='1' in:draw={{ duration: 1000 }}></line>
-            {/if}
-        {/each}
-    </g>
+                {#if isVisible}
+                    <path d={br1(data)} stroke='#f06ca9' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
+                    <path d={br2(inverseData)} stroke='#27c297' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
+                {/if}
 
-    {#if isVisible}
-        <path d={br1(data)} stroke='red' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
-        <path d={br2(inverseData)} stroke='blue' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
-    {/if}
+            
+                    {#if iteration}
+                        <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[0])} 0)' stroke='#f06ca9' stroke-opacity='0.3' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+                        <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[1])} 0)' stroke='#f06ca9' stroke-opacity='0.3' stroke-width='5' in:draw={{ duration: 1000 }}></line>
 
-  
-        {#if iteration}
-            <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[0])} 0)' stroke='red' stroke-opacity='0.3' stroke-width='5' in:draw={{ duration: 1000 }}></line>
-            <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[1])} 0)' stroke='red' stroke-opacity='0.3' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+                        <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[0])})' stroke='#27c297' stroke-opacity='0.3' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+                        <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[1])})' stroke='#27c297' stroke-opacity='0.3'stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+                    {/if}
+            
 
-            <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[0])})' stroke='blue' stroke-opacity='0.3' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
-            <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[1])})' stroke='blue' stroke-opacity='0.3'stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
-        {/if}
-   
+                <text
+                    class="xlabel"
+                    text-anchor="middle"
+                    x={width-250}
+                    y={height+40}
+                >
+                    Your Chosen Price of Ice Cream
+                </text>
 
-    <text
-        class="xlabel"
-        text-anchor="middle"
-        x={width-250}
-        y={height+40}
-    >
-        Your Chosen Price of Ice Cream
-    </text>
+                <text
+                    class="ylabel"
+                    text-anchor="middle"
+                    transform="rotate(-90)"
+                    x={-250}
+                    y={-40}
+                >
+                    Rival's Chosen Price of Ice Cream
+                </text>
 
-    <text
-        class="ylabel"
-        text-anchor="middle"
-        transform="rotate(-90)"
-        x={-250}
-        y={-40}
-    >
-        Rival's Chosen Price of Ice Cream
-    </text>
-</svg>
+            
+            </svg>
 
-<button on:click={back}>&lt;</button>
-<button on:click={iterate}>&gt;</button>
+            <div style="display: flex">
+                <button style="width: 50%" on:click={back}>&lt;</button>
+                <button style="width: 50%" on:click={iterate}>&gt;</button>
+            </div>
+     
+        </div>
 
-<div id="RSet">
-    <p>Rationalizable Set</p>
-    <p>[&infin;,&infin;] x [&infin;,&infin;]</p>
-</div>
+        <div style="overflow-y:scroll; height: 60vh; padding-right: 1rem">
+            <div id="RSet" style="color: white; margin-left: 10vw;">
+                <p>Rationalizable Set</p>
+                <p>[&infin;,&infin;] x [&infin;,&infin;]</p>
+            </div>  
+        </div>
 
-
-
+    </div>
 </div>
 
 <style>
-#graph {
+
+#graph2 {
     position:fixed;
     display: none;
+    margin-top: 10vh;
+    color: black;
+}
+
+#container {
+    display: flex;
 }
 
 .line {
     transition: all 1s;
 }
 
-#graph.show {
+#graph2.show {
     display: block;
 }
 
 svg {
     max-width: 100%;
     height: auto;
+    background-color: aliceblue;
   }
 </style>
