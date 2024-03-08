@@ -1,6 +1,7 @@
 <script>
     import * as d3 from 'd3';
     import { onMount } from 'svelte';
+    import { draw } from "svelte/transition";
 
     const width = 500;
     const height = 500;
@@ -129,27 +130,31 @@
     export let index;
     let isVisible= false;
 
-    $: if (index === 2) {
+    $: if (index === 4) {
         isVisible = true;
     } else {
         isVisible = false;
     }
 
 </script>
-<div id='graph' class:show={isVisible}>
+<div id='graph1' class:show={isVisible}>
     <h3>Visualizing strict/weak dominance</h3>
-    <p>Click on a dot and drag it to a new location on the grid. The visualization will dynamically update based on your movement.</p>
+    <p class='text'>Click on a dot and drag it to a new location on the grid. <br/> The visualization will dynamically update based on your movement.</p>
 
     <div id="graphContainer">
         <svg {width} {height} viewBox="40 -40 {width-100} {height+100}" on:pointermove={recordMousePosition} id="chart1">
             <!-- axis -->
-            <g stroke="#ffebeb" stroke-width="0.5" opacity=0>
+            <g stroke="#ffebeb" stroke-width="0.5" opacity=1>
                 {#each xAxis as x}
-                    <line x="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='black' stroke-width='1'></line>
+                    {#if isVisible}
+                        <line x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(x)} 0)' stroke='#d3d3d3' stroke-width='1' in:draw={{ duration: 1000 }}></line>
+                    {/if}
                 {/each}
 
                 {#each yAxis as y}
-                    <line x="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='black' stroke-width='1'></line>
+                    {#if isVisible}
+                        <line x1="0" y1="{yScale(1)}" x2="{width}" y2="{yScale(1)}" transform='translate(0 {yScale(y)})' stroke='#d3d3d3' stroke-width='1' in:draw={{ duration: 1000 }}></line>
+                    {/if}
                 {/each}
             </g>
 
@@ -234,7 +239,7 @@
             </div>
 
             <div>
-                <p>{dominanceText}</p>
+                <p class="text">{dominanceText}</p>
             </div>
         </div>
 
@@ -242,17 +247,23 @@
 </div>
 
 <style>
-    #graph {
+    #graph1 {
         position:fixed;
         display: none;
+        margin-top: 5vh;
+        color: black;
     }
 
-    #graph.show {
+    #graph1.show {
         display: block;
     }
 
     #graphTable {
         display: flex;
+    }
+
+    h3, .text {
+        color: white;
     }
 
     table {

@@ -12,9 +12,6 @@
 
 </script>
 
-
-<!-- <Intro /> -->
-
 <Scroller
   top={0.0}
   bottom={1}
@@ -24,32 +21,48 @@
   bind:offset
   bind:progress
 >
+
   <div class="background" slot="background">
-    <div class="progress-bars">
+    <progress id="scrollProgress" value={progress || 0} />
+    <!-- <div class="progress-bars">
         <p>current section: <strong>{index + 1}/{count}</strong></p>
         <progress value={count ? (index + 1) / count : 0} />
         <p>offset in current section</p>
         <progress value={offset || 0} />
         <p>total progress</p>
         <progress value={progress || 0} />
-      </div>
+      </div> -->
   </div>
 
   <div class="foreground" slot="foreground">
+    <!-- <Intro /> -->
     <Text {index} />
     <Graph {index} />
     <Graph2 {index} />
-    <section>This is the first section. </section>
-    <section>This is the second section.</section>
-    <section>This is the third section.</section>
-    <section>This is the fourth section.</section>
-    <section>This is the fifth section.</section>
+    <section></section>
+    <section></section>
+    <section></section>
+    <section></section>
+    <section></section>
+    <section></section>
+    <section></section>
 
   </div>
 
 </Scroller>
 
 <style>
+    #scrollProgress {
+        width: 100%;
+        border: none;
+        margin: 0;
+        padding: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background-color: white !important;
+    }
     .background {
       width: 70%;
       height: 70vh;
@@ -70,9 +83,9 @@
     }
   
     section {
-      height: 200vh;
-      background-color: rgba(0, 0, 0, 0.2);
-      /* background-color: transparent; */
+      height: 100vh;
+      /* background-color: rgba(0, 0, 0, 0.2); */
+      background-color: transparent;
       text-align: center;
       max-width: 1000px; /* adjust at will */
       color: black;

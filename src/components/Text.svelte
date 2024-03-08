@@ -9,11 +9,13 @@
     
     let introIndex = 0;
     let isIntroVisible= false;
-
-    let situationIndex = 1;
-    let isSituationVisible=false;
-
-    let contIndex = 3;
+    let situationIndex1 = 1;
+    let isSituation1Visible=false;
+    let situationIndex2 = 2;
+    let isSituation2Visible=false;
+    let situationIndex3 = 3;
+    let isSituation3Visible=false;
+    let contIndex = 5;
     let isContVisible= false;
 
     $: if (index === introIndex) {
@@ -22,33 +24,28 @@
         isIntroVisible = false;
     }
 
-    $: if (index === situationIndex) {
-        isSituationVisible = true;
+    $: if (index === situationIndex1) {
+        isSituation1Visible = true;
     } else {
-        isSituationVisible = false;
+        isSituation1Visible = false;
+    }
+
+    $: if (index === situationIndex2) {
+        isSituation2Visible = true;
+    } else {
+        isSituation2Visible = false;
+    }
+
+    $: if (index === situationIndex3) {
+        isSituation3Visible = true;
+    } else {
+        isSituation3Visible = false;
     }
 
     $: if (index === contIndex) {
         isContVisible = true;
     } else {
         isContVisible = false;
-    }
-
-    let iteration = 0;
-    let range = [0,4];
-
-    function iterate() {
-        if (iteration < 3) {
-            iteration++;
-        }
-        console.log('interate', iteration);
-    }
-
-    function back() {
-        if (iteration > 0) {
-            iteration--;
-        }
-        console.log('back', iteration)
     }
 </script>
 
@@ -58,8 +55,8 @@
             <text 
                 font-size="40px" 
                 transform='translate(350, 100)'
-                in:fly={{ delay: 0, duration: 500, x: -500, opacity: 0}}
-                out:fly={{ delay: 250, duration: 500, x: -500, opacity: 0}}
+                in:fly={{ delay: 0, duration: 750, x: -500, opacity: 0}}
+                out:fly={{ delay: 250, duration: 750, x: -500, opacity: 0}}
             >
                 Visualizing Rationalizibility:
             </text>
@@ -67,8 +64,8 @@
             <text 
                 font-size="40px" 
                 transform='translate(70, 200)'
-                in:fly={{ delay: 250, duration: 500, x: 500, opacity: 0.0}}
-                out:fly={{ delay: 250, duration: 500, x: 500, opacity: 0}}
+                in:fly={{ delay: 250, duration: 750, x: 500, opacity: 0.0}}
+                out:fly={{ delay: 250, duration: 750, x: 500, opacity: 0}}
             >
                 Title w/ hook
             </text>
@@ -76,15 +73,17 @@
     </svg>
 </div>
 
-<div id='situation' class:show={isSituationVisible}>
-    <h3>Consider the situation:</h3>
-    {#if iteration === 0}
-        <p>Imagine that you are the owner of an ice cream shop...</p>
+<div id='situation1' class:show={isSituation1Visible}>
+    {#if isSituation1Visible}
+        <p in:fly={{ delay: 0, duration: 750, x: -500, opacity: 0}}>Imagine that you are the owner of an ice cream shop and you find yourself in a competitive situation with a new ice cream shop that has opened just across the street.</p>
+    {/if}
+    {#if isSituation1Visible}
         <svg 
             class="icecream"
             id='player1'
             stroke="#000" stroke-opacity="0.2"
             xmlns="http://www.w3.org/2000/svg" data-name="Layer 2" viewBox="0 0 1271.22 949.58"
+            in:fly={{ delay: 0, duration: 750, x: 500, opacity: 0}}
         >
             <defs><style>.cls-1{fill:#fbce58;}.cls-2{fill:#fff;}.cls-3{fill:#f06ca9;}.cls-4{fill:#9bd5c5;}</style></defs>
             <polygon class="cls-1" points="460.22 425.79 269.72 943.79 79.22 425.79 460.22 425.79"/>
@@ -103,8 +102,9 @@
             <rect class="cls-2" x="384.51" y="1182.9" width="4" height="56.51" transform="translate(-893.47 358.29) rotate(-47.73)"/>
             <path class="cls-3" d="M178,589S142.85,419.11,293.13,350.66c64.86-29.53,139.7-29.33,203.23,3C555.72,383.81,615.29,447,607,579c0,0,66,15.33,66,96.67s-110,116-170,78.66c0,0-28,65.34-114,65.34,0,0-65.33-.67-102.67-66.67,0,0-115.23,61.18-156.75-50.82-9.2-24.83-7.57-52.58,5.71-75.49C143.38,612.73,156.57,598.85,178,589Z" transform="translate(-123.78 -324.21)"/>
         </svg>
-    {:else if iteration === 1}
-        <p>...and you find yourself in a competitive situation with a new ice cream shop that has opened just across the street. </p>
+    {/if}
+</div>
+<!-- <div id='situation2' class:show={isSituation2Visible}>
         <svg 
             class="icecream"
             id='player1'
@@ -128,33 +128,29 @@
             <rect class="cls-2" x="384.51" y="1182.9" width="4" height="56.51" transform="translate(-893.47 358.29) rotate(-47.73)"/>
             <path class="cls-4" d="M178,589S142.85,419.11,293.13,350.66c64.86-29.53,139.7-29.33,203.23,3C555.72,383.81,615.29,447,607,579c0,0,66,15.33,66,96.67s-110,116-170,78.66c0,0-28,65.34-114,65.34,0,0-65.33-.67-102.67-66.67,0,0-115.23,61.18-156.75-50.82-9.2-24.83-7.57-52.58,5.71-75.49C143.38,612.73,156.57,598.85,178,589Z" transform="translate(-123.78 -324.21)"/>
         </svg>
-    {:else if iteration === 2}
-        <p>Every day before opening, both you and your rival must decide on the price at which you will sell your ice cream for the day. </p>
-        <p>The choices are simple:</p>
-        <li>higher price, or</li> 
-        <li>a lower price.</li>
-    {:else if iteration === 3}
-    <p>As a rational and strategic individual, you understand that your decisions should be based on what you anticipate your rival might do, with the ultimate goal of maximizing your own profits by the end of the day.</p>
-    {/if}
-    
-    <button on:click={back}>&lt;</button>
-    <button on:click={iterate}>&gt;</button>
-</div>
-<!-- <div id='intro' class:show={isIntroVisible}>
-    <h1 
-        transition:fly={{ delay: 250, duration: 300, x: 100, y: 500, opacity: 0.5 }}
-    >
-        Visualizing Rationalizibility
-    </h1>
-    <p>
-        Imagine that you are the owner of an ice cream shop and you find yourself in a competitive situation with a new ice cream shop that has opened just across the street. Every day before opening, both you and your rival must decide on the price at which you will sell your ice cream for the day. The choices are simple: a higher price or a lower price. Being rational and strategic individuals, you understand that your decisions should be based on what you anticipate your rival might do, with the ultimate goal of maximizing your own profits by the end of the day.
-    </p>
 </div> -->
+
+<div id='situation2' class:show={isSituation2Visible}>
+    {#if isSituation2Visible}
+        <p in:fly={{ delay: 0, duration: 750, x: -500, opacity: 0}}>Every day before opening, both you and your rival must decide on the price at which you will sell your ice cream for the day. </p>
+        <p in:fly={{ delay: 500, duration: 750, x: 500, opacity: 0}}>The choices are simple:</p>
+        <li in:fly={{ delay: 1250, duration: 750, x: 500, opacity: 0}}>higher price, or</li> 
+        <li in:fly={{ delay: 1900, duration: 750, x: 500, opacity: 0}}>a lower price.</li>
+    {/if}
+</div>
+
+<div id='situation3' class:show={isSituation3Visible}>
+    {#if isSituation3Visible}
+        <p in:fly={{ delay: 0, duration: 750, x: -500, opacity: 0}} >As a rational and strategic individual, you understand that your decisions should be based on what you anticipate your rival might do, with the ultimate goal of maximizing your own profits by the end of the day.</p>
+    {/if}
+</div>
 
 <div id='cont' class:show={isContVisible}>
     <p>
-        Now imagine that rather than choosing only between a higher or lower price, you can choose exactly how much your ice cream costs.<br/>
-        These days the industry standard price for a scoop of ice cream is somewhere between [2 and 8] dollars.
+        Now imagine that rather than choosing only between a higher or lower price, you can choose exactly how much your ice cream costs.
+    </p>
+    <p>
+        These days the industry standard price for a scoop of ice cream is somewhere between [0 and 6] dollars.
     </p>
 </div>
 
@@ -162,10 +158,12 @@
     div {
         position: fixed;
         display: none;
+        margin-top: 10vh;
     }
 
     p {
-        width: 50vw;
+        width: 40vw;
+        font-size: 1.5rem;
     }
 
     div.show {
