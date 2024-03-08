@@ -56,83 +56,83 @@
             .call(d3.axisLeft(gy));
     });
 
-    function dragstarted(d) {
-        console.log('start');
-        d3.select(this)
-          .attr('stroke',"black")
-          .attr('stroke-width',"5");
-    }
+    // function dragstarted(d) {
+    //     console.log('start');
+    //     d3.select(this)
+    //       .attr('stroke',"black")
+    //       .attr('stroke-width',"5");
+    // }
 
-    function dragmove(d) {
-        console.log('moving');
+    // function dragmove(d) {
+    //     console.log('moving');
 
-        const [snapX, snapY] = snapToGrid([d.x, d.y]);
+    //     const [snapX, snapY] = snapToGrid([d.x, d.y]);
 
-        const maxX = width - marginLeft - marginRight;
-        const maxY = height - marginTop - marginBottom;
+    //     const maxX = width - marginLeft - marginRight;
+    //     const maxY = height - marginTop - marginBottom;
 
-        const clampedX = Math.max(Math.min(snapX, maxX), marginLeft);
-        const clampedY = Math.max(Math.min(snapY, maxY), marginTop);
+    //     const clampedX = Math.max(Math.min(snapX, maxX), marginLeft);
+    //     const clampedY = Math.max(Math.min(snapY, maxY), marginTop);
 
 
-        d3.select(this)
-            .attr("cx", clampedX)
-            .attr("cy", clampedY);
-    }
+    //     d3.select(this)
+    //         .attr("cx", clampedX)
+    //         .attr("cy", clampedY);
+    // }
 
-    function dragend(d) {
-        console.log('end');
-        d3.select(this)
-          .attr('stroke',"none");
+    // function dragend(d) {
+    //     console.log('end');
+    //     d3.select(this)
+    //       .attr('stroke',"none");
 
-        const [snapX, snapY] = snapToGrid([d.x, d.y]);
+    //     const [snapX, snapY] = snapToGrid([d.x, d.y]);
 
-        const maxX = width - marginLeft - marginRight;
-        const maxY = height - marginTop - marginBottom;
+    //     const maxX = width - marginLeft - marginRight;
+    //     const maxY = height - marginTop - marginBottom;
 
-        const clampedX = Math.max(Math.min(snapX, maxX), marginLeft);
-        const clampedY = Math.max(Math.min(snapY, maxY), marginTop);
+    //     const clampedX = Math.max(Math.min(snapX, maxX), marginLeft);
+    //     const clampedY = Math.max(Math.min(snapY, maxY), marginTop);
 
-        pmap[d3.select(this).attr("id")].x = clampedX;
-        pmap[d3.select(this).attr("id")].y = clampedY;
+    //     pmap[d3.select(this).attr("id")].x = clampedX;
+    //     pmap[d3.select(this).attr("id")].y = clampedY;
 
-        console.log(players);
-        console.log(pmap["player2"].x, pmap["player2"].y);
-        console.log(pmap["player1"].x, pmap["player1"].y);
+    //     console.log(players);
+    //     console.log(pmap["player2"].x, pmap["player2"].y);
+    //     console.log(pmap["player1"].x, pmap["player1"].y);
 
-        if (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) {
-            console.log("Alternative R strictly dominates B.");
-            dominanceText = "Alternative R strictly dominates B.";
-        } else if (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) {
-            console.log("Alternative B strictly dominates R.");
-            dominanceText = "Alternative B strictly dominates R.";
-        } else if ((pmap["player1"].x == pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) || (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y == pmap["player2"].y)) {
-            console.log("Alternative B weakly dominates R.");
-            dominanceText = "Alternative B weakly dominates R.";
-        } else if ((pmap["player1"].x == pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) || (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y == pmap["player2"].y)) {
-            console.log("Alternative R weakly dominates B.");
-            dominanceText = "Alternative R weakly dominates B.";
-        } else {
-            console.log("No dominance relationship.");
-            dominanceText = "No dominance relationship.";
-        }
-    }
+    //     if (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) {
+    //         console.log("Alternative R strictly dominates B.");
+    //         dominanceText = "Alternative R strictly dominates B.";
+    //     } else if (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) {
+    //         console.log("Alternative B strictly dominates R.");
+    //         dominanceText = "Alternative B strictly dominates R.";
+    //     } else if ((pmap["player1"].x == pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) || (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y == pmap["player2"].y)) {
+    //         console.log("Alternative B weakly dominates R.");
+    //         dominanceText = "Alternative B weakly dominates R.";
+    //     } else if ((pmap["player1"].x == pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) || (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y == pmap["player2"].y)) {
+    //         console.log("Alternative R weakly dominates B.");
+    //         dominanceText = "Alternative R weakly dominates B.";
+    //     } else {
+    //         console.log("No dominance relationship.");
+    //         dominanceText = "No dominance relationship.";
+    //     }
+    // }
 
-    function snapToGrid([x, y]) {
-        // Define grid interval
-        const gridSize = 50;
+    // function snapToGrid([x, y]) {
+    //     // Define grid interval
+    //     const gridSize = 50;
 
-        // Snap to the nearest grid point
-        const snapX = Math.round(x / gridSize) * gridSize;
-        const snapY = Math.round(y / gridSize) * gridSize;
+    //     // Snap to the nearest grid point
+    //     const snapX = Math.round(x / gridSize) * gridSize;
+    //     const snapY = Math.round(y / gridSize) * gridSize;
 
-        return [snapX, snapY];
-    }
+    //     return [snapX, snapY];
+    // }
 
     export let index;
     let isVisible= false;
 
-    $: if (index === 3) {
+    $: if (index === 4) {
         isVisible = true;
     } else {
         isVisible = false;

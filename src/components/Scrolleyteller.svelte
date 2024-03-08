@@ -1,8 +1,6 @@
 <script>
     // import * as d3 from 'd3';
     import Scroller from '@sveltejs/svelte-scroller';
-    import { draw } from "svelte/transition";
-    import { cubicInOut } from 'svelte/easing';
 
     import Graph from '../components/Graph.svelte';
     import Graph2 from '../components/Graph2.svelte';
@@ -11,20 +9,19 @@
   
     let count, index, offset, progress;
 
-
-
 </script>
 
 <Scroller
   top={0.0}
   bottom={1}
-  threshold={0.5}
+  threshold={0.3}
   bind:count
   bind:index
   bind:offset
   bind:progress
 >
   <div class="background" slot="background">
+    
     <div class="progress-bars">
       <p>current section: <strong>{index + 1}/{count}</strong></p>
       <progress value={count ? (index + 1) / count : 0} />
@@ -36,24 +33,23 @@
   </div>
 
   <div class="foreground" slot="foreground">
-    <Graph {index} />
     <Text {index} />
+    <Graph {index} />
     <Graph2 {index} />
     <section>This is the first section. </section>
     <section>This is the second section.</section>
     <section>This is the third section.</section>
     <section>This is the fourth section.</section>
+    <section>This is the fifth section.</section>
+
   </div>
 
 </Scroller>
 
-
-
-
 <style>
     .background {
-      width: 100%;
-      height: 100vh;
+      width: 70%;
+      height: 70vh;
       position: relative;
     }
   
@@ -71,12 +67,10 @@
     }
   
     section {
-      height: 100vh;
+      height: 200vh;
       background-color: rgba(0, 0, 0, 0.2); /* 20% opaque */
-      /* color: white; */
-      /* outline: magenta solid 3px; */
       text-align: center;
-      max-width: 750px; /* adjust at will */
+      max-width: 1000px; /* adjust at will */
       color: black;
       padding: 1em;
       margin: 0 0 2em 0;
