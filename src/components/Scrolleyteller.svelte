@@ -4,12 +4,16 @@
 
     import Graph from '../components/Graph.svelte';
     import Graph2 from '../components/Graph2.svelte';
+    import Intro from '../components/Intro.svelte';
     import Text from '../components/Text.svelte';
     
   
     let count, index, offset, progress;
 
 </script>
+
+
+<!-- <Intro /> -->
 
 <Scroller
   top={0.0}
@@ -21,15 +25,14 @@
   bind:progress
 >
   <div class="background" slot="background">
-    
     <div class="progress-bars">
-      <p>current section: <strong>{index + 1}/{count}</strong></p>
-      <progress value={count ? (index + 1) / count : 0} />
-      <p>offset in current section</p>
-      <progress value={offset || 0} />
-      <p>total progress</p>
-      <progress value={progress || 0} />
-    </div>
+        <p>current section: <strong>{index + 1}/{count}</strong></p>
+        <progress value={count ? (index + 1) / count : 0} />
+        <p>offset in current section</p>
+        <progress value={offset || 0} />
+        <p>total progress</p>
+        <progress value={progress || 0} />
+      </div>
   </div>
 
   <div class="foreground" slot="foreground">
@@ -62,13 +65,14 @@
   
     .progress-bars {
       position: absolute;
-      background: rgba(170, 51, 120, 0.2) /*  40% opaque */;
+      background: rgba(170, 51, 120, 0.2);
       visibility: visible;
     }
   
     section {
       height: 200vh;
-      background-color: rgba(0, 0, 0, 0.2); /* 20% opaque */
+      background-color: rgba(0, 0, 0, 0.2);
+      /* background-color: transparent; */
       text-align: center;
       max-width: 1000px; /* adjust at will */
       color: black;

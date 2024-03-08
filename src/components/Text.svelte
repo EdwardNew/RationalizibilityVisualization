@@ -108,8 +108,6 @@
         <svg 
             class="icecream"
             id='player1'
-            x={player1.x}
-            y={player1.y}
             stroke="#000" stroke-opacity="0.2"
             xmlns="http://www.w3.org/2000/svg" data-name="Layer 2" viewBox="0 0 1271.22 949.58"
         >
@@ -161,10 +159,6 @@
 </div>
 
 <style>
-    /* svg {
-        position: relative;
-        left: 20px;
-    } */
     div {
         position: fixed;
         display: none;

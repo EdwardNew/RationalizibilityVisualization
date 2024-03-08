@@ -13,8 +13,6 @@
     const marginLeft = 0;
     const axisBound = 6;
 
-    let dominanceText = "No dominance relationship."
-
     let xScale = d3.scaleLinear([0, axisBound], [0, width]);
     const xAxis = [...Array(axisBound).keys()];
     
@@ -28,18 +26,6 @@
     var gy = d3.scaleLinear()
         .domain([0, axisBound])
         .range([height, 0]);
-
-
-    let player1 = {'x':xScale(2), 'y':yScale(2), 'color': 'red'};
-    let player2 = {'x':xScale(3), 'y':yScale(3), 'color': 'blue'};
-    let players = [player1, player2];
-    let pmap = {'player1': player1, 'player2': player2}
-    
-
-    let mousePosition = [0, 0];
-    function recordMousePosition(event) {
-        mousePosition = d3.pointer(event);
-    }
 
     let mounted = false;
 
@@ -57,79 +43,6 @@
             .call(d3.axisLeft(gy));
     });
 
-    // function dragstarted(d) {
-    //     console.log('start');
-    //     d3.select(this)
-    //       .attr('stroke',"black")
-    //       .attr('stroke-width',"5");
-    // }
-
-    // function dragmove(d) {
-    //     console.log('moving');
-
-    //     const [snapX, snapY] = snapToGrid([d.x, d.y]);
-
-    //     const maxX = width - marginLeft - marginRight;
-    //     const maxY = height - marginTop - marginBottom;
-
-    //     const clampedX = Math.max(Math.min(snapX, maxX), marginLeft);
-    //     const clampedY = Math.max(Math.min(snapY, maxY), marginTop);
-
-
-    //     d3.select(this)
-    //         .attr("cx", clampedX)
-    //         .attr("cy", clampedY);
-    // }
-
-    // function dragend(d) {
-    //     console.log('end');
-    //     d3.select(this)
-    //       .attr('stroke',"none");
-
-    //     const [snapX, snapY] = snapToGrid([d.x, d.y]);
-
-    //     const maxX = width - marginLeft - marginRight;
-    //     const maxY = height - marginTop - marginBottom;
-
-    //     const clampedX = Math.max(Math.min(snapX, maxX), marginLeft);
-    //     const clampedY = Math.max(Math.min(snapY, maxY), marginTop);
-
-    //     pmap[d3.select(this).attr("id")].x = clampedX;
-    //     pmap[d3.select(this).attr("id")].y = clampedY;
-
-    //     console.log(players);
-    //     console.log(pmap["player2"].x, pmap["player2"].y);
-    //     console.log(pmap["player1"].x, pmap["player1"].y);
-
-    //     if (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) {
-    //         console.log("Alternative R strictly dominates B.");
-    //         dominanceText = "Alternative R strictly dominates B.";
-    //     } else if (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) {
-    //         console.log("Alternative B strictly dominates R.");
-    //         dominanceText = "Alternative B strictly dominates R.";
-    //     } else if ((pmap["player1"].x == pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) || (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y == pmap["player2"].y)) {
-    //         console.log("Alternative B weakly dominates R.");
-    //         dominanceText = "Alternative B weakly dominates R.";
-    //     } else if ((pmap["player1"].x == pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) || (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y == pmap["player2"].y)) {
-    //         console.log("Alternative R weakly dominates B.");
-    //         dominanceText = "Alternative R weakly dominates B.";
-    //     } else {
-    //         console.log("No dominance relationship.");
-    //         dominanceText = "No dominance relationship.";
-    //     }
-    // }
-
-    // function snapToGrid([x, y]) {
-    //     // Define grid interval
-    //     const gridSize = 50;
-
-    //     // Snap to the nearest grid point
-    //     const snapX = Math.round(x / gridSize) * gridSize;
-    //     const snapY = Math.round(y / gridSize) * gridSize;
-
-    //     return [snapX, snapY];
-    // }
-
     export let index;
     let isVisible= false;
 
@@ -138,7 +51,6 @@
     } else {
         isVisible = false;
     }
-
 
 
     // New Curve Plotting Code
@@ -203,7 +115,7 @@
 </script>
 <div id='graph' class:show={isVisible}>
 
-<svg {width} {height} viewBox="0 -5 {width-65} {height+65}" on:pointermove={recordMousePosition} id="chart2">
+<svg {width} {height} viewBox="0 -5 {width-65} {height+65}" id="chart2">
     <!-- axis -->
     <g stroke="lightgray" stroke-width="0.5" transition:fade={{ delay: 250, duration: 5000 }}>
         {#each xAxis as x}
@@ -226,11 +138,11 @@
 
   
         {#if iteration}
-            <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[0])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
-            <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[1])} 0)' stroke='green' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+            <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[0])} 0)' stroke='red' stroke-opacity='0.3' stroke-width='5' in:draw={{ duration: 1000 }}></line>
+            <line class="line" x1="0" y1="0" x2="0" y2="{height}" transform='translate({xScale(currentBounds[1])} 0)' stroke='red' stroke-opacity='0.3' stroke-width='5' in:draw={{ duration: 1000 }}></line>
 
-            <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[0])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
-            <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[1])})' stroke='green' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+            <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[0])})' stroke='blue' stroke-opacity='0.3' stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
+            <line class="line" x1="0" y1="0" x2="{width}" y2="0" transform='translate(0 {height - yScale(currentBounds[1])})' stroke='blue' stroke-opacity='0.3'stroke-width='5' in:draw={{ duration: 1000, delay: 1000 }}></line>
         {/if}
    
 
