@@ -138,7 +138,8 @@
 
 </script>
 <div id='graph1' class:show={isVisible}>
-    <h3>Visualizing strict/weak dominance</h3>
+    <h3>Visualizing strict/weak dominance<br></h3>
+    <p class="text">In the intricate game of ice cream pricing, the concept of <em>dominance</em> plays a pivotal role<br>in shaping your decisions and responses. <em>Dominance</em> in game theory refers to a strategy<br>that outperforms all other available strategies, regardless of the choices made by your rival.</p>
     <p class='text'>Click on a dot and drag it to a new location on the grid. <br/> The visualization will dynamically update based on your movement.</p>
 
     <div id="graphContainer">
@@ -239,7 +240,16 @@
             </div>
 
             <div>
-                <p class="text">{dominanceText}</p>
+                <p class="text" style="margin-left: 90px;">{dominanceText}</p>
+                {#if dominanceText === "Alternative H strictly dominates L."}
+                <p class="text" style="margin-left: 90px;">Player 1's strategy H yields a higher payoff<br>than any strategy of Player 2, regardless of<br>Player 2's choice.</p>
+                {:else if dominanceText === "Alternative L strictly dominates H."}
+                <p class="text" style="margin-left: 90px;">Player 2's strategy B yields a higher payoff<br>than any strategy of Player 1, regardless of<br>Player 1's choice.</p>
+                {:else if dominanceText === "Alternative L weakly dominates H."}
+                <p class="text" style="margin-left: 90px;">Player 2's strategy B yields a higher<br>payoff than any strategy of Player 1 when Player 1 plays L.</p>
+                {:else if dominanceText === "Alternative H weakly dominates L."}
+                <p class="text" style="margin-left: 90px;">Player 1's strategy A yields a higher<br>payoff than any strategy of Player 2 when Player 2 plays H.</p>
+                {/if}
             </div>
         </div>
 

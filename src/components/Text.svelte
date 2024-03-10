@@ -1,6 +1,7 @@
 <script>
     import { fly, fade } from "svelte/transition";
     import { cubicInOut } from 'svelte/easing';
+    import { color } from "d3";
 
     export let index;
 
@@ -137,8 +138,9 @@
 <div id='situation2' class:show={isSituation2Visible}>
     {#if isSituation2Visible}
         <p in:fly={{ delay: 0, duration: 750, x: -500, opacity: 0}}>Every day before opening, both you and your rival must decide on the price at which you will sell your ice cream for the day. </p>
-        <p in:fly={{ delay: 500, duration: 750, x: 500, opacity: 0}}>The choices are simple:</p>
-        <li in:fly={{ delay: 1250, duration: 750, x: 500, opacity: 0}}>higher price, or</li> 
+        <p in:fly={{ delay: 500, duration: 750, x: 500, opacity: 0}}>The game is simple. Your choices are:</p>
+        <li in:fly={{ delay: 1250, duration: 750, x: 500, opacity: 0}}>A higher price</li> 
+        <p in:fly={{ delay: 1250, duration: 750, x: 500, opacity: 0}}>OR</p> 
         <li in:fly={{ delay: 1900, duration: 750, x: 500, opacity: 0}}>a lower price.</li>
     {/if}
 </div>
@@ -146,15 +148,31 @@
 <div id='situation3' class:show={isSituation3Visible}>
     {#if isSituation3Visible}
         <p in:fly={{ delay: 0, duration: 750, x: -500, opacity: 0}} >As a rational and strategic individual, you understand that your decisions should be based on what you anticipate your rival might do, with the ultimate goal of maximizing your own profits by the end of the day.</p>
+        <p in:fly={{ delay: 0, duration: 750, x: -500, opacity: 0}} >Each player’s decision is unknown to the other until opening time. This is called a simultaneous game.</p>
     {/if}
 </div>
 
 <div id='cont' class:show={isContVisible}>
     <p>
-        Now imagine that rather than choosing only between a higher or lower price, you can choose exactly how much your ice cream costs.
+        Now imagine that rather than choosing between discretely higher or lower price, you can choose exactly how much your ice cream costs.
     </p>
     <p>
-        These days the industry standard price for a scoop of ice cream is somewhere between [0 and 6] dollars.
+        These days the industry standard price for a scoop of ice cream is somewhere in the interval [$0, $6].<br>Payoffs are now continuous within this interval.
+    </p>
+
+    <p>
+        For simplicity, suppose demand for ice cream is fixed at 16 at the start of each day.
+        
+        Both you and your rival's profits are reflected by this reaction function:
+    </p>
+    <p style="color:lightgreen">
+        Payoff for Player 1:<br> P(price<sub>1</sub>, price<sub>2</sub>) = 
+        [<sup>16(price<sub>1</sub>)</sup>&frasl;<sub>(price<sub>2</sub>) + 2</sub>] - (price<sub>1</sub>)<sup>2</sup>
+    </p>    
+
+    <p>
+        The reaction function represents how Player 1 could react given a change in Player 2's prices.<br><br>The squared term at the end represents the diminishing returns to high prices.
+        If Player 1 sets their price too high, people won't buy their ice cream.
     </p>
 </div>
 

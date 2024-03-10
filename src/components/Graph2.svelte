@@ -114,6 +114,10 @@
 
 </script>
 <div id='graph2' class:show={isVisible}>
+    <h3 style="color:white">Visualizing the Rationalizable Set of Actions</h3>
+    <p style="color:white">These are you and your rival's best response curves. Begin the animation by clicking the right arrow below.<br>
+        The pink bound lines represent the rational actions that your rival believes you could take</p>
+    <p style="color:white">Click the arrows at the bottom to iterate through each rationalizable set.</p>
     <div id='container'>
         <div style="display: flex; flex-direction:column">
             <svg {width} {height} viewBox="40 -40 {width-120} {height+120}" id="chart2">
