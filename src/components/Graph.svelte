@@ -241,7 +241,16 @@
             </div>
 
             <div>
-                <p class="text">{dominanceText}</p>
+                <p class="text" style="margin-left: 90px;">{dominanceText}</p>
+                {#if dominanceText === "Alternative H strictly dominates L."}
+                <p class="text" style="margin-left: 90px;">Player 1's strategy H yields a higher payoff<br>than any strategy of Player 2, regardless of<br>Player 2's choice.</p>
+                {:else if dominanceText === "Alternative L strictly dominates H."}
+                <p class="text" style="margin-left: 90px;">Player 2's strategy B yields a higher payoff<br>than any strategy of Player 1, regardless of<br>Player 1's choice.</p>
+                {:else if dominanceText === "Alternative L weakly dominates H."}
+                <p class="text" style="margin-left: 90px;">Player 2's strategy B yields a higher<br>payoff than any strategy of Player 1 when Player 1 plays L.</p>
+                {:else if dominanceText === "Alternative H weakly dominates L."}
+                <p class="text" style="margin-left: 90px;">Player 1's strategy A yields a higher<br>payoff than any strategy of Player 2 when Player 2 plays H.</p>
+                {/if}
             </div>
         </div>
 
