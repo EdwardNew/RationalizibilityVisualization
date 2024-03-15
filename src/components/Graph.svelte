@@ -1,7 +1,7 @@
 <script>
     import * as d3 from 'd3';
     import { onMount } from 'svelte';
-    import { draw } from "svelte/transition";
+    import { draw, fade } from "svelte/transition";
 
     const width = 500;
     const height = 500;
@@ -10,7 +10,7 @@
     const marginBottom = 0;
     const marginLeft = 0;
 
-    let dominanceText = "No dominance relationship."
+    let dominanceText = "There is no dominance relationship.";
 
     let xScale = d3.scaleLinear([0, 5], [0, width]);
     const xAxis = [...Array(5).keys()];
@@ -101,6 +101,7 @@
         if (pmap["player1"].x > pmap["player2"].x && pmap["player1"].y < pmap["player2"].y) {
             console.log("Alternative H strictly dominates L.");
             dominanceText = "Alternative H strictly dominates L.";
+            
         } else if (pmap["player1"].x < pmap["player2"].x && pmap["player1"].y > pmap["player2"].y) {
             console.log("Alternative L strictly dominates H.");
             dominanceText = "Alternative L strictly dominates H.";
@@ -131,16 +132,17 @@
     let isVisible= false;
 
     $: if (index === 4) {
-        isVisible = true;
-    } else {
+        isVisible = true; }
+    else {
         isVisible = false;
     }
 
 </script>
 <div id='graph1' class:show={isVisible}>
-    <h3>Visualizing strict/weak dominance</h3>
-    <p class='text'>Click on a dot and drag it to a new location on the grid. <br/> The visualization will dynamically update based on your movement.</p>
-
+    {#if index === 4}
+    <h3 in:fade={{duration: 200, opacity: 0}} out:fade={{delay: 200, duration: 200, x: -500, opacity: 0}}>Visualizing dominance</h3>
+    <p class='text' in:fade={{duration: 200, opacity: 0}} out:fade={{delay: 200, duration: 200, x: -500, opacity: 0}}>Click on a dot and drag it to a new location on the grid. <br/> The table will update based on your movement to show what the best choice is.</p>
+    {/if}
     <div id="graphContainer">
         <svg {width} {height} viewBox="40 -40 {width-100} {height+100}" on:pointermove={recordMousePosition} id="chart1">
             <!-- axis -->
@@ -252,6 +254,7 @@
         display: none;
         margin-top: 5vh;
         color: black;
+        transform: translatex(350px);
     }
 
     #graph1.show {
@@ -259,7 +262,7 @@
     }
 
     #graphTable {
-        display: flex;
+        display: block;
     }
 
     h3, .text {
@@ -282,8 +285,8 @@
     }
 
     circle:hover {
-       filter: brightness(0.8);
-       cursor: grab;
+        filter: brightness(0.8);
+        cursor: grab;
     }
 
     circle:active {
