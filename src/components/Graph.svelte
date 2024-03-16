@@ -265,6 +265,7 @@
         position:fixed;
         display: none;
         margin-top: 20vh;
+        margin-left: 5vh;
         color: black;
         transform: translate(220px, -50px);
     }

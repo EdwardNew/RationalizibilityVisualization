@@ -121,7 +121,7 @@
         in:fly={{delay: 200, duration: 750, x: -500, opacity: 0}}
         out:fly={{duration: 500, x: -500, opacity: 0}}
     >
-        <p>Now consider a scenario in which one pricing strategy yields a higher payoff than the other in some cases, and at lease as high a payoff in all other cases, regardless of the choices made by your rival. In this case, the strategy is said to be <b>weakly dominant</b>.</p>
+        <p>Now consider a scenario in which one pricing strategy yields a higher payoff than the other in some cases, and at least as high a payoff in all other cases, regardless of the choices made by your rival. In this case, the strategy is said to be <b>weakly dominant</b>.</p>
         <p>This strategy is preferred over other strategies in at least some situations but might not always be the best choice in all situations.</p>
     </div>
 {/if}

@@ -251,6 +251,7 @@
         width: 870px;
         /* height: 600px; */
         transform: translate(220px, 30px);
+        margin-left: 5vh;
     }
 
     table {
