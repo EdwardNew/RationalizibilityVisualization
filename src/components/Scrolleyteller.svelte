@@ -4,6 +4,7 @@
   
   import Title from './Title.svelte';
   import Graph from './Graph.svelte';
+  import GraphScroll from './GraphScroll.svelte';
   import Graph2 from './Graph2.svelte';
   import Intro from './Intro.svelte';
   import Text from './Text.svelte';    
@@ -37,14 +38,15 @@
 
   <div class="foreground" slot="foreground">
     <Text {index} />
+    <GraphScroll {index} />
     <Graph {index} />
     <Graph2 {index} />
     <section class="title"></section>
 
     <section id="hook"> 
       <div class="hook">
-        <p>Ever found yourself caught in the mental web of "I know that they know that I know that they know..."? Surprisingly, there's an entire branch of economics dedicated to formalizing and deciphering this seemingly mundane idea. At its core, game theory delves into the intricate choreography of decisions, reactions, and outcomes arising from human interaction. This captivating exploration reveals the hidden dynamics that mold our everyday choices, shedding light on the strategies of cooperation, competition, and the complex dance of decision-making that defines our interactions. Game theory's reach extends far beyond economics, offering valuable insights into the strategic intricacies woven into the fabric of our lives.</p>
-        <p>Let's walk through an example together to see how we can leverage game theory to optimize our own decision-making as well as visualize how sometimes there really only is one “correct” choice.</p>
+        <p>Ever found yourself caught in the mental web of "I know that they know that I know that they know..."? Surprisingly, there's an entire branch of economics dedicated to formalizing this situation in the decision-making process. At its core, game theory reveals the hidden dynamics governing our everyday choices, shedding light on the strategies of cooperation, competition, and decision-making that defines human interactions. Game theory's reach extends far beyond economics, offering valuable insights into the strategies woven into the fabric of our society.</p>
+        <p>Let's walk through an example to see how game theory can be leveraged to optimize decision-making as well as visualize how sometimes there really only is one “correct” option.</p>
       </div>
     </section>
 
@@ -69,28 +71,33 @@
       <div class="intro2">
         <p>Every day before opening, both <mark id="player1">you</mark> and <mark id="player2">your rival</mark> must decide on the price at which you will sell your ice cream for the day. Each player’s decision is unknown to the other until opening time. This is called a <b>simultaneous game</b>. </p>
         <p id="focus">The choices are simple: a higher price (H) or a lower price (L).</p>
-        <p>Being rational and strategic individuals, you understand that your decisions should be based on what you anticipate your rival might do, with the ultimate goal of maximizing your own profits by the end of the day.</p>
+        <p>As a rational and strategic individual, you base your decisions on what you anticipate your rival might do, with the ultimate goal of maximizing your own profits by the end of the day.</p>
       </div>
     </section>
 
     <section class="graph1">
-      <div class="graph1">
-        <!-- <h3>Best Response:</h3> -->
-        <p>You must consider what is the optimal decision given your belief about what your rival might choose. If your rival sets a higher price, your best response would be to set a lower price for the day, and vice versa. </p>
-        <p>The <b>best response</b> is the strategy that maximizes your profit given the anticipated actions of your rival. This concept reflects your adaptability and responsiveness in a dynamic and strategic environment.</p>
-      </div>
-      <div class="graph1">
-        <!-- <h3>Dominance:</h3> -->
-        <p><b>Dominance</b> refers to a strategy that outperforms all other available strategies, regardless of the choices made by your rival.</p>
-      </div>
-      <div class="graph1">
-        <!-- <h3>Pure dominance:</h3> -->
+      <!-- <div class="graph1">
+        <p>In this game of ice cream pricing, the concept of dominance plays a pivotal role in shaping your decisions and responses.</p>
+        <p>A strategy is <b>dominant</b> if it outperforms all other available strategies, regardless of the choices made by your rival.</p>
+        <p>We will focus on two strategies, setting a high price, or setting a low price. Scroll on to see the different types of dominance that can take place.</p>
+      </div> -->
+      <!-- <div class="graph1">
         <p>Consider the scenario where one pricing strategy consistently yields a higher profit than the other, irrespective of your rival's choice. In this case, that strategy is said to be <b>strictly dominant</b>. </p>
-        <p>If setting a higher price consistently results in more profit, it is a dominant strategy for you, and similarly, if setting a lower price consistently yields more profit, it is a dominant strategy as well. The dominance concept simplifies decision-making by allowing you to focus on the strategy that consistently performs better.</p>
+        <p>If setting a higher price consistently results in more profit, it is a dominant strategy for you. The dominance concept simplifies decision-making by allowing you to focus on the strategy that consistently performs better.</p>
       </div>
+      <div class="graph1">
+        <p>Now consider a scenario in which one pricing strategy yields a higher payoff than the other in some cases, and at lease as high a payoff in all other cases, regardless of the choices made by your rival. In this case, the strategy is said to be <b>weakly dominant</b>.</p>
+        <p>If setting a higher price consistently results in more profit, it is a dominant strategy for you. The dominance concept simplifies decision-making by allowing you to focus on the strategy that consistently performs better.</p>
+      </div> -->
     </section>
 
-    <section>section 6
+    <section class="graph1"></section>
+
+    <section class="graph1"></section>
+
+    <section class="graph1"></section>
+
+    <section>
       <div class="graph2">
         <p>
           Now imagine that rather than choosing only between a higher or lower price, you can choose exactly how much your ice cream costs.
@@ -146,23 +153,22 @@
 
     .hook {
       width: 85%;
-      transform: translateY(350px);
+      transform: translateY(400px);
       margin: 0 auto;
       padding: 20px;
       border: 2px solid;
       border-color: #5585b5;
+      border-radius: 10px;
       box-shadow: 60px -16px #5585b5;
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: rgba(255, 255, 255);
     }
 
     div.hook p {
       line-height: 1.5;
       text-align: center;
-      border-radius: 5px;
       padding: 15px;
       padding-left: 20px;
       padding-right: 20px;
-      /* background-color: #5585b5; */
       color: "white";
       font-size: larger;
     }
@@ -182,6 +188,7 @@
       transform: translate(25px, 250px);
       border: 2px solid;
       border-color: #e35b99;
+      border-radius: 10px;
       box-shadow: 60px -16px #e35b99;
       background-color: rgba(255, 255, 255);
       font-size: larger;
@@ -193,6 +200,7 @@
       transform: translate(500px, 350px);
       border: 2px solid;
       border-color: #49c4a2;
+      border-radius: 10px;
       box-shadow: 60px -16px #49c4a2;
       background-color: rgba(255, 255, 255);
       font-size: larger;
@@ -210,8 +218,9 @@
       font-size: larger;
       border: 2px solid;
       border-color: #5585b5;
+      border-radius: 10px;
       box-shadow: 60px -16px #5585b5;
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: rgba(255, 255, 255);
     }
 
     mark#player1{
@@ -233,31 +242,32 @@
     }
 
     section.graph1 {
-      height: 150vh;
+      height: 80vh;
     }
 
-    div.graph1 {
-      width: 40%;
-      transform: translate(-175px, 10px);
-      /* margin: 0 auto; */
-      padding: 30px;
+    /* div.graph1 {
+      width: 30%;
+      transform: translate(-150px, 10px);
+      margin: 0 auto;
+      padding: 20px;
       font-size: larger;
       border: 2px solid;
       border-color: #5585b5;
-      box-shadow: 40px -16px #5585b5;
-      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+      box-shadow: 20px -16px #5585b5;
+      background-color: rgba(255, 255, 255);
       margin-bottom: 50px;
-    }
+    } */
 
     .graph2 {
       width: 75%;
-      transform: translate(50px, 100px);
+      transform: translate(50px, 350px);
       padding: 30px;
       font-size: larger;
       border: 2px solid;
       border-color: #5585b5;
       box-shadow: 40px -16px #5585b5;
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: rgba(255, 255, 255);
     }
 
     section {

@@ -46,7 +46,7 @@
     export let index;
     let isVisible= false;
 
-    $: if (index === 6) {
+    $: if (index === 9) {
         isVisible = true;
     } else {
         isVisible = false;
@@ -61,6 +61,10 @@
 
     function equation2(x) {
         return (8/x) - 2;
+    }
+
+    function equation3(x) {
+        return (x-2) * 8;
     }
 
     const br1 = d3.line()
@@ -91,7 +95,7 @@
         if (iteration > 0) {
             iteration--;
         }
-
+        // currentBounds = undoBounds(currentBounds);
         console.log('back', iteration)
     }
 
@@ -104,11 +108,11 @@
     }
 
     function undoBounds(currentBounds) {
-        return [calcBound(currentBounds[1]), calcBound(currentBounds[0])];
+        return [undoBound(currentBounds[1]), undoBound(currentBounds[0])];
     }
 
     function undoBound(bound) {
-        return equation1(bound);
+        return equation3(bound);
     }
 
 

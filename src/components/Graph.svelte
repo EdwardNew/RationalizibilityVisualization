@@ -70,12 +70,8 @@
         const clampedX = Math.max(Math.min(snapX, maxX), marginLeft);
         const clampedY = Math.max(Math.min(snapY, maxY), marginTop);
 
-
         d3.select(this)
             .attr("transform", "translate(" + (clampedX) + "," + (clampedY) + ")");
-
-            // .attr("x", clampedX)
-            // .attr("y", clampedY);
     }
 
     function dragend(d) {
@@ -129,20 +125,18 @@
     }
 
     export let index;
-    let isVisible= false;
+    
+    let isVisible = false;
 
-    $: if (index === 4) {
+    $: if (index === 7) {
         isVisible = true; }
     else {
         isVisible = false;
     }
 
 </script>
+
 <div id='graph1' class:show={isVisible}>
-    {#if index === 4}
-    <h3 in:fade={{duration: 200, opacity: 0}} out:fade={{delay: 200, duration: 200, x: -500, opacity: 0}}>Visualizing dominance</h3>
-    <p class='text' in:fade={{duration: 200, opacity: 0}} out:fade={{delay: 200, duration: 200, x: -500, opacity: 0}}>Click on a dot and drag it to a new location on the grid. <br/> The table will update based on your movement to show what the best choice is.</p>
-    {/if}
     <div id="graphContainer">
         <svg {width} {height} viewBox="40 -40 {width-100} {height+100}" on:pointermove={recordMousePosition} id="chart1">
             <!-- axis -->
@@ -198,7 +192,7 @@
                 x={-250}
                 y={-40}
             >
-                Payoff ($) if opposing player chooses a low pirce (L)
+                Payoff ($) if opposing player chooses a low price (L)
             </text>
         </svg>
         
@@ -241,15 +235,19 @@
             </div>
 
             <div>
-                <p class="text" style="margin-left: 90px;">{dominanceText}</p>
+                <p class="text" 
+                    style="margin-top: 20px;"
+                >
+                    {dominanceText}
+                </p>
                 {#if dominanceText === "Alternative H strictly dominates L."}
-                <p class="text" style="margin-left: 90px;">Player 1's strategy H yields a higher payoff<br>than any strategy of Player 2, regardless of<br>Player 2's choice.</p>
+                <p class="explanation" style="margin-top: 20px;">Your strategy H yields a higher payoff than any strategy of your rival, regardless of your rival's choice.</p>
                 {:else if dominanceText === "Alternative L strictly dominates H."}
-                <p class="text" style="margin-left: 90px;">Player 2's strategy B yields a higher payoff<br>than any strategy of Player 1, regardless of<br>Player 1's choice.</p>
+                <p class="explanation" style="margin-top: 20px;">Your strategy L yields a higher payoff than any strategy of your rival, regardless of your rival's choice.</p>
                 {:else if dominanceText === "Alternative L weakly dominates H."}
-                <p class="text" style="margin-left: 90px;">Player 2's strategy B yields a higher<br>payoff than any strategy of Player 1 when Player 1 plays L.</p>
+                <p class="explanation" style="margin-top: 20px;">Your strategy L yields a higher or equal payoff when your rival chooses H.</p>
                 {:else if dominanceText === "Alternative H weakly dominates L."}
-                <p class="text" style="margin-left: 90px;">Player 1's strategy A yields a higher<br>payoff than any strategy of Player 2 when Player 2 plays H.</p>
+                <p class="explanation" style="margin-top: 20px;">Your strategy H yields a higher or equal payoff when your rival chooses L.</p>
                 {/if}
             </div>
         </div>
@@ -259,11 +257,16 @@
 
 <style>
     #graph1 {
+        background-color: white;
+        border: 2px solid;
+        border-color: #5585b5;
+        border-radius: 10px;
+        padding: 20px;
         position:fixed;
         display: none;
-        margin-top: 5vh;
+        margin-top: 20vh;
         color: black;
-        transform: translatex(350px);
+        transform: translate(220px, -50px);
     }
 
     #graph1.show {
@@ -274,61 +277,80 @@
         display: block;
     }
 
-    h3, .text {
-        color: white;
+    .text {
+        color: black;
+        padding-top: 50px;
+        width: 100%;
+        position: fixed;
+        transform: translateX(-100px);
+    }
+
+    .explanation {
+        width: 30%;
+        position: fixed;
+        transform: translate(-100px, 100px);
     }
 
     table {
-        background-color: aliceblue;
+        border: 2px solid;
+        background-color: white;
         table-layout: fixed;
         border-collapse: collapse;
+        border-color: #5585b5;
         height: 100px;
         width: 300px;
+        transform: translate(-20px, 20px);
     }
 
     svg {
-        background-color: aliceblue;
+        background-color: white;
         position: relative;
         max-width: 100%;
         /* height: auto; */
     }
 
     circle:hover {
-        filter: brightness(0.8);
+        fill: #ffc1c8;
+        /* filter: brightness(1.5); */
         cursor: grab;
     }
 
     circle:active {
        cursor: grabbing;
+       fill: #ffc1c8;
     }
 
-    
-
     td {
+        border: 2px solid;
+        border-color: #5585b5;
         text-align: center;
-        padding:1%;
+        /* padding:1%; */
     }
 
     .p1 {
         color: #f06ca9;
         display: inline-block;
-        padding-right: 10%;   
+        padding-left: 5px;
+        padding-right: 5px; 
     }
     .p2 {
         color: #27c297;
         display: inline-block;
-        padding-left: 10%;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
     .p2-label {
         margin-left: 45%;
         color: #27c297;
+        transform: translate(-35px, 25px);
     }
 
     .p1-label {
         color: #f06ca9;
         margin-top: 35%;
-        padding-right: 5%;
+        padding-right: 9%;
+        transform: translateY(0px);
         text-align: center;
     }
 
