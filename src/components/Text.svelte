@@ -19,6 +19,8 @@
     let isSituation3Visible=false;
     let situationIndex4 = 7;
     let isSituation4Visible= false;
+    let situationIndex5 = 9
+    let isSituation5Visible = false;
 
     $: if (index === transitionIndex) {
         transitionVisible = true;
@@ -50,6 +52,12 @@
         isSituation4Visible = true;
     } else {
         isSituation4Visible = false;
+    }
+
+    $: if (index === situationIndex5) {
+        isSituation5Visible = true;
+    } else {
+        isSituation5Visible = false;
     }
 </script>
 
@@ -136,6 +144,17 @@
         <p>On the right, the payoff matrix for each potential outcome can be observed. <mark class="player1">Your choices</mark> are shown in each row of the matrix, and the <mark class="player2">your rival's choices</mark> are in each column, respectively. Each cell in the matrix represents the payoffs for each player, with <mark class="player1">your payoffs</mark> in the first position, and <mark class="player2">your rival's payoffs</mark> in the second position.</p>
     </div>
 {/if}
+
+<!-- {#if index === situationIndex5}
+    <div class="graph2" class:show={isSituation5Visible}
+        in:fly={{delay: 200, duration: 750, x: -500, opacity: 0}}
+        out:fly={{duration: 500, x: -500, opacity: 0}}
+    >
+        <p><b>Visualizing dominance:</b></p>
+        <p>Click on a dot and drag it to a new location on the grid.</p>
+        <p>On the right, the payoff matrix for each potential outcome can be observed. <mark class="player1">Your choices</mark> are shown in each row of the matrix, and the <mark class="player2">your rival's choices</mark> are in each column, respectively. Each cell in the matrix represents the payoffs for each player, with <mark class="player1">your payoffs</mark> in the first position, and <mark class="player2">your rival's payoffs</mark> in the second position.</p>
+    </div>
+{/if} -->
 <!-- <div id='situation1' class:show={isSituation1Visible}>
     {#if isSituation1Visible}
         <p in:fly={{ delay: 0, duration: 750, x: -500, opacity: 0}}>Imagine that you are the owner of an ice cream shop and you find yourself in a competitive situation with a new ice cream shop that has opened just across the street.</p>

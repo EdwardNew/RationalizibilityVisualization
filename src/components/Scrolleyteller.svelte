@@ -108,9 +108,27 @@
       </div>
     </section>
 
-    <section>section 7</section>
+    <section>
+      <div class="graph1">
 
-    <section>section 8 takeaway</section>
+      </div>
+    </section>
+
+    <section>
+      <div class="graph2">
+        <p> 
+          <b>Key Takeaway</b> 
+        </p>
+
+        <p>
+          Rationalizability is a process of dynamic strategizing. The purpose of this visualization was to simplify and enhance one's understanding of fundamental concepts in game theory.
+        </p>
+
+        <p>
+          Congrats! You've learned some of the foundations of game theory and have begun to understand how game theorists quantize competitive and strategic scenarios. Hopefully you are able to use this knowledge to better understand any future opponents that you may face in any circumstance.
+        </p>
+      </div>
+    </section>
 
   </div>
 
