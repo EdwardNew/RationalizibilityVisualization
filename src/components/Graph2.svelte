@@ -80,12 +80,15 @@
 
 
     let iteration = 0;
+    let bounds = [[0,6]];
     let currentBounds = [0,6];
 
 
     function iterate() {
         iteration++;
         console.log('interate', iteration);
+        bounds.push(currentBounds);
+        console.log(bounds);
         currentBounds = calcBounds(currentBounds);
         console.log(iteration, currentBounds);
         document.querySelector('#RSet').innerHTML += `<p>[${currentBounds[0].toFixed(4)}, ${currentBounds[1].toFixed(4)}] x [${currentBounds[0].toFixed(4)}, ${currentBounds[1].toFixed(4)}]</p>`
@@ -93,10 +96,10 @@
 
     function back() {
         if (iteration > 0) {
+            currentBounds = bounds.pop();
+            document.querySelector('#RSet').removeChild(document.querySelector('#RSet').lastChild);
             iteration--;
         }
-        // currentBounds = undoBounds(currentBounds);
-        console.log('back', iteration)
     }
 
     function calcBounds(currentBounds) {
@@ -105,14 +108,6 @@
 
     function calcBound(bound) {
         return equation1(bound);
-    }
-
-    function undoBounds(currentBounds) {
-        return [undoBound(currentBounds[1]), undoBound(currentBounds[0])];
-    }
-
-    function undoBound(bound) {
-        return equation3(bound);
     }
 
 
@@ -188,11 +183,11 @@
      
         </div>
 
-        <div style="overflow-y:scroll; height: 60vh; padding-right: 1rem">
+        <div style="overflow-y:auto; height: 500px; padding-right: 1rem">
             <div id="RSet" style="color: white; margin-left: 10vw;">
                 <p>Rationalizable Set</p>
                 <p>[&infin;,&infin;] x [&infin;,&infin;]</p>
-            </div>  
+            </div>
         </div>
 
     </div>
@@ -207,7 +202,7 @@
     color: black;
 }
 
-#container {
+#graphContainer {
     display: flex;
 }
 
