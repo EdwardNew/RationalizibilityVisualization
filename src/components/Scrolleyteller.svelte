@@ -7,9 +7,9 @@
   import Graph2 from './Graph2.svelte';
   import Intro from './Intro.svelte';
   import Text from './Text.svelte';
+  import Katex from 'svelte-katex';
   
   let count, index, offset, progress;
-
 </script>
 
 <Scroller
@@ -83,7 +83,8 @@
             Assume that demand for ice cream is fixed at the beginning of each day based on the morning weather report. You also know from experience that the standard price for a scoop of ice cream in your area is somewhere between [0 and 6] dollars. Since you know your rival is just as cunning as you are you assume they know all the same information as you. This is known as a <b>complete information game</b> (a strategic situation in which each player knows all the same information).        </p>
         <p>
             Now, since both you and your rival have infinite choices to price your ice creams, your payoffs are represented using functions instead of discrete values in a table.
-            Assume this is the payoff/profit function for both you and your rival that is dependent on the price both of you choose to set:<br /><br />payoff(price1, price2) = 16 * price1 / price2 + 2 - (price1)^2
+            Assume this is the payoff/profit function for both you and your rival that is dependent on the price both of you choose to set:<br /><br />
+            <Katex>\text{'{payoff}_{player1}'}(price_1, price_2) = \frac{'{16 \\cdot price_1}'}{'{price_2 +2 }'} - (price_1)^2</Katex>
         </p>
       </div>
     </section>
