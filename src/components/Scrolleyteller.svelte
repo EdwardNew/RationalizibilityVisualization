@@ -1,13 +1,12 @@
 <script>
     // import * as d3 from 'd3';
   import Scroller from '@sveltejs/svelte-scroller';
-  
   import Title from './Title.svelte';
   import Graph from './Graph.svelte';
   import GraphScroll from './GraphScroll.svelte';
   import Graph2 from './Graph2.svelte';
   import Intro from './Intro.svelte';
-  import Text from './Text.svelte';    
+  import Text from './Text.svelte';
   
   let count, index, offset, progress;
 
@@ -26,14 +25,6 @@
   <div class="background" slot="background">
     <Title {index}/>
     <progress id="scrollProgress" value={progress || 0} />
-    <!-- <div class="progress-bars">
-        <p>current section: <strong>{index + 1}/{count}</strong></p>
-        <progress value={count ? (index + 1) / count : 0} />
-        <p>offset in current section</p>
-        <progress value={offset || 0} />
-        <p>total progress</p>
-        <progress value={progress || 0} />
-      </div> -->
   </div>
 
   <div class="foreground" slot="foreground">
@@ -75,21 +66,7 @@
       </div>
     </section>
 
-    <section class="graph1">
-      <!-- <div class="graph1">
-        <p>In this game of ice cream pricing, the concept of dominance plays a pivotal role in shaping your decisions and responses.</p>
-        <p>A strategy is <b>dominant</b> if it outperforms all other available strategies, regardless of the choices made by your rival.</p>
-        <p>We will focus on two strategies, setting a high price, or setting a low price. Scroll on to see the different types of dominance that can take place.</p>
-      </div> -->
-      <!-- <div class="graph1">
-        <p>Consider the scenario where one pricing strategy consistently yields a higher profit than the other, irrespective of your rival's choice. In this case, that strategy is said to be <b>strictly dominant</b>. </p>
-        <p>If setting a higher price consistently results in more profit, it is a dominant strategy for you. The dominance concept simplifies decision-making by allowing you to focus on the strategy that consistently performs better.</p>
-      </div>
-      <div class="graph1">
-        <p>Now consider a scenario in which one pricing strategy yields a higher payoff than the other in some cases, and at lease as high a payoff in all other cases, regardless of the choices made by your rival. In this case, the strategy is said to be <b>weakly dominant</b>.</p>
-        <p>If setting a higher price consistently results in more profit, it is a dominant strategy for you. The dominance concept simplifies decision-making by allowing you to focus on the strategy that consistently performs better.</p>
-      </div> -->
-    </section>
+    <section class="graph1"></section>
 
     <section class="graph1"></section>
 
@@ -103,16 +80,23 @@
           Now imagine that rather than choosing only between a higher or lower price, you can choose exactly how much your ice cream costs.
         </p>
         <p>
-            These days the industry standard price for a scoop of ice cream is somewhere between [1 and 4] dollars.
+            Assume that demand for ice cream is fixed at the beginning of each day based on the morning weather report. You also know from experience that the standard price for a scoop of ice cream in your area is somewhere between [0 and 6] dollars. Since you know your rival is just as cunning as you are you assume they know all the same information as you. This is known as a <b>complete information game</b> (a strategic situation in which each player knows all the same information).        </p>
+        <p>
+            Now, since both you and your rival have infinite choices to price your ice creams, your payoffs are represented using functions instead of discrete values in a table.
+            Assume this is the payoff/profit function for both you and your rival that is dependent on the price both of you choose to set:<br /><br />payoff(price1, price2) = 16 * price1 / price2 + 2 - (price1)^2
         </p>
       </div>
     </section>
 
     <section>
-      <div class="graph1">
-
+      <div class="graph2">
+        <p>Since the payoff function is a downwards parabola, we know that taking the partial derivative with respect to each player's price will maximize their profit given the other player's ice cream price. Since both players have the same payoff function, we have symmetric curves known as 
+            <b>best response curves</b>.All weakly dominant strategies for each player lie on their best response curves since they tell the players what price they should choose for their ice cream given that the other player has already chosen their price in order to maximize their profits. Knowing this, each player can limit the domain for their own best response curves based on the minimum and maximum prices they know their opponent will choose for their ice cream. This is known as the <b>rationalizable set</b>. </p>
       </div>
     </section>
+
+    <section>
+      </section>
 
     <section>
       <div class="graph2">
@@ -158,12 +142,6 @@
       height: auto;
       position: relative;
     }
-  
-    /* .progress-bars {
-      position: absolute;
-      background: rgba(170, 51, 120, 0.2);
-      visibility: visible;
-    } */
 
     .title {
       height: 50vh;

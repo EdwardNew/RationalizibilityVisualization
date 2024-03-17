@@ -215,7 +215,7 @@
                             <div class="p2"><p>${pmap["player1"].x / 100}</p></div>
                         </td>
                         <td>
-                            <div class="p1"><p>${pmap["player1"].y / 100}</p></div>
+                            <div class="p1"><p>${5 - pmap["player1"].y / 100}</p></div>
                             <div class="p2"><p>${pmap["player2"].x / 100}</p></div>
                         </td>
                         </tr>
@@ -223,11 +223,11 @@
                         <td><div class="p1"><p>L</p></div></td>
                         <td>   
                             <div class="p1"><p>${pmap["player2"].x / 100}</p></div>
-                            <div class="p2"><p>${pmap["player1"].y / 100}</p></div>
+                            <div class="p2"><p>${5 - pmap["player1"].y / 100}</p></div>
                         </td>
                         <td>
-                            <div class="p1"><p>${pmap["player2"].y / 100}</p></div>
-                            <div class="p2"><p>${pmap["player2"].y / 100}</p></div>
+                            <div class="p1"><p>${ 5 - pmap["player2"].y / 100}</p></div>
+                            <div class="p2"><p>${ 5 - pmap["player2"].y / 100}</p></div>
                         </td>
                         </tr>
                     </table>
@@ -241,13 +241,13 @@
                     {dominanceText}
                 </p>
                 {#if dominanceText === "Alternative H strictly dominates L."}
-                <p class="explanation" style="margin-top: 20px;">Your strategy H yields a higher payoff than any strategy of your rival, regardless of your rival's choice.</p>
+                <p class="explanation" style="margin-top: 20px;">Your strategy H yields a strictly higher payoff than any of your other strategies, regardless of your rival's choice.</p>
                 {:else if dominanceText === "Alternative L strictly dominates H."}
-                <p class="explanation" style="margin-top: 20px;">Your strategy L yields a higher payoff than any strategy of your rival, regardless of your rival's choice.</p>
+                <p class="explanation" style="margin-top: 20px;">Your strategy L yields a strictly higher payoff than than any of your other strategies, regardless of your rival's choice.</p>
                 {:else if dominanceText === "Alternative L weakly dominates H."}
-                <p class="explanation" style="margin-top: 20px;">Your strategy L yields a higher or equal payoff when your rival chooses H.</p>
+                <p class="explanation" style="margin-top: 20px;">Your strategy L yields a higher or equal payoff to any of your other strategies, regardless of your rival's choice.</p>
                 {:else if dominanceText === "Alternative H weakly dominates L."}
-                <p class="explanation" style="margin-top: 20px;">Your strategy H yields a higher or equal payoff when your rival chooses L.</p>
+                <p class="explanation" style="margin-top: 20px;">Your strategy H yields a higher or equal payoff to any of your other strategies, regardless of your rival's choice.</p>
                 {/if}
             </div>
         </div>

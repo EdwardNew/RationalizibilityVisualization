@@ -2,6 +2,7 @@
     import { fly, fade } from "svelte/transition";
     import { cubicInOut } from 'svelte/easing';
     import { color } from "d3";
+    
 
     export let index;
 
@@ -119,7 +120,7 @@
         in:fly={{delay: 200, duration: 750, x: -500, opacity: 0}}
         out:fly={{duration: 500, x: -500, opacity: 0}}
     >
-        <p>Consider the scenario where one pricing strategy consistently yields a higher profit than the other, irrespective of your rival's choice. In this case, that strategy is said to be <b>strictly dominant</b>. </p>
+        <p>Consider the scenario where one pricing strategy consistently yields a higher profit than the other, irrespective of your rival's choice. In this case, that strategy <b style="color: #e35b99">(H)</b> is said to be <b>strictly dominant</b>. </p>
         <p>If setting a higher price consistently results in more profit, it is a dominant strategy for you. The dominance concept simplifies decision-making by allowing you to focus on the strategy that consistently performs better.</p>
     </div>
 {/if}
@@ -129,8 +130,8 @@
         in:fly={{delay: 200, duration: 750, x: -500, opacity: 0}}
         out:fly={{duration: 500, x: -500, opacity: 0}}
     >
-        <p>Now consider a scenario in which one pricing strategy yields a higher payoff than the other in some cases, and at least as high a payoff in all other cases, regardless of the choices made by your rival. In this case, the strategy is said to be <b>weakly dominant</b>.</p>
-        <p>This strategy is preferred over other strategies in at least some situations but might not always be the best choice in all situations.</p>
+        <p>Now consider a scenario in which one pricing strategy yields a higher payoff than the other in some cases, and at least as high a payoff in all other cases, regardless of the choices made by your rival. In this case, the strategy <b style="color: #e35b99">(H)</b> is said to be <b>weakly dominant</b>.</p>
+        <p>This strategy is still preferred over all other strategies since you still maximize your payoffs no matter the actions of the other player.</p>
     </div>
 {/if}
 

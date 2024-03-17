@@ -187,29 +187,29 @@
             <table border="1px">
                 <tr>
                 <td></td>
-                <td><p class="p1">H</p></td>
-                <td><p class="p1">L</p></td>
+                <td><p class="p2">H</p></td>
+                <td><p class="p2">L</p></td>
                 </tr>
                 <tr>
-                <td><p class="p2">H</p></td>
+                <td><p class="p1">H</p></td>
                 <td>
                     <p class="p1">${event1["x"] / 100}</p>
                     <p class="p2">${event1["x"] / 100}</p>
                 </td>
                 <td>
-                    <p class="p1">${event1["y"] / 100}</p>
+                    <p class="p1">${5 - (event1["y"] / 100)}</p>
                     <p class="p2">${event2["x"] / 100}</p>
                 </td>
                 </tr>
                 <tr>
-                <td><p class="p2">L</p></td>
+                <td><p class="p1">L</p></td>
                 <td>   
                     <p class="p1">${pmap["event2"].x / 100}</p>
                     <p class="p2">${event2["x"] / 100}</p>
                 </td>
                 <td>
-                    <p class="p1">${event2["y"] / 100}</p>
-                    <p class="p2">${event2["y"] / 100}</p>
+                    <p class="p1">${5 - (event2["y"] / 100)}</p>
+                    <p class="p2">${5 - (event2["y"] / 100)}</p>
                 </td>
                 </tr>
             </table>

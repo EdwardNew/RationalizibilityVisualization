@@ -46,7 +46,7 @@
     export let index;
     let isVisible= false;
 
-    $: if (index === 9) {
+    $: if (index === 10) {
         isVisible = true;
     } else {
         isVisible = false;
@@ -83,14 +83,10 @@
     let bounds = [[0,6]];
     let currentBounds = [0,6];
 
-
     function iterate() {
         iteration++;
-        console.log('interate', iteration);
         bounds.push(currentBounds);
-        console.log(bounds);
         currentBounds = calcBounds(currentBounds);
-        console.log(iteration, currentBounds);
         document.querySelector('#RSet').innerHTML += `<p>[${currentBounds[0].toFixed(4)}, ${currentBounds[1].toFixed(4)}] x [${currentBounds[0].toFixed(4)}, ${currentBounds[1].toFixed(4)}]</p>`
     }
 
@@ -110,7 +106,6 @@
         return equation1(bound);
     }
 
-
 </script>
 <div id='graph2' class:show={isVisible}>
     <!-- <h3 style="color:white">Visualizing the Rationalizable Set of Actions</h3>
@@ -122,6 +117,9 @@
         Click the arrows at the bottom to iterate through each rationalizable set.
     </p> -->
     <div id='graphContainer'>
+        <div style="display: flex;">
+
+        
         <div style="display: flex; flex-direction:column">
             <svg {width} {height} viewBox="40 -40 {width-120} {height+120}" id="chart2">
                 <!-- axis -->
@@ -140,8 +138,8 @@
                 </g>
 
                 {#if isVisible}
-                    <path d={br1(data)} stroke='#f06ca9' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
-                    <path d={br2(inverseData)} stroke='#27c297' fill='none' stroke-width='5' in:draw={{ duration: 2000, delay: 1000 }}></path>
+                    <path d={br1(data)} stroke='#f06ca9' fill='none' stroke-width='5' in:draw={{ duration: 1000, delay: 250 }}></path>
+                    <path d={br2(inverseData)} stroke='#27c297' fill='none' stroke-width='5' in:draw={{ duration: 1000, delay: 250 }}></path>
                 {/if}
 
             
@@ -173,6 +171,7 @@
                     Rival's Chosen Price of Ice Cream
                 </text>
 
+                
             
             </svg>
 
@@ -180,16 +179,20 @@
                 <button style="width: 50%" on:click={back}>&lt;</button>
                 <button style="width: 50%" on:click={iterate}>&gt;</button>
             </div>
-     
         </div>
 
         <div style="overflow-y:auto; height: 500px; padding-right: 1rem">
-            <div id="RSet" style="color: white; margin-left: 10vw;">
+            <div id="RSet" style="margin-left: 10vw;">
                 <p>Rationalizable Set</p>
                 <p>[&infin;,&infin;] x [&infin;,&infin;]</p>
             </div>
         </div>
 
+    </div>
+
+    </div>
+    <div style="width: 60vw; padding-top: 30px;">
+        Click the arrows below the graph to iterate through this domain limiting process. If both players simultaneously iteratively limit the domains of their best response curves based on the other player’s curve, we find that they will eventually converge to a single price for both players. This is the optimal price for both you and your rival to price your ice cream at.
     </div>
 </div>
 
